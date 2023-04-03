@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Keyboard Trainer</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link rel="stylesheet" href="style.css">
+    <link href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
+    <link href="./node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
+    <link href="./node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet">
+</head>
+
+    <!-- Navbar -->
+
+    <nav id = "navbar">
+        <div id = "tasks-menu" class = "nav-section"><i class="fa-regular fa-bars color-white"></i></div>
+        <div id = "nav-center" class = "nav-section">
+            <div class="color-white center-text" style="margin-right: 40px;">Keyboard Trainer</div>
+            </div>
+        <div id = "stats-menu" class = "nav-section"><i class="fa-sharp fa-regular fa-user color-white"></i></div>
+    </nav>
+    
+
+<body id="a">
+    <div id="menus">
+    <!-- Left Menu -->
+
+    <div class="menu" id = "btnRow">
+        <button id = "hide" class="btn color-white"><i class="fa-sharp fa-regular fa-arrow-right fa-rotate-270" style="font-size: 20px;"></i></button>
+        <button class="btn btn-text color-white"  id="task1">Task 1</button>
+        <button class="btn btn-text color-white"  id="task2">Task 2</button>
+        <button class="btn btn-text color-white" id="task3">Custom from file</button>
+    </div>
+
+<!-- Right Menu -->
+    <div class="menu" id = "stats">
+     <button id = "hide2" class="btn btn-text color-white" ><i class="fa-sharp fa-regular fa-arrow-right fa-rotate-270" style="font-size: 20px;"></i></button>
+        <div class="score btn-text color-white" id="score">Score</div>
+        <div class="ae btn-text color-white" id = "ae">Average errors</div>
+        <div class="ct btn-text color-white" id = "ct">Completed Tasks</div>
+        <div id="statsRow">
+                <button id = "mode1" class="btn btn-text color-white">1 mode</button>
+                <button id = "mode2" class="btn btn-text color-white">2 mode</button>
+        </div>
+    </div>
+</div>
+
+ <!-- Text field -->
+ <div class = "mainText">
+    <div id = "text-field">
+    <div id = "text"></div>
+    </div>
+ </div>
+
+
+</body>
+<footer>
+    <div class="text-center color-white" id = "f1">Sergey Sokolov</div>
+ </footer>
+    <script src="./preload.js"></script>
+</html>
