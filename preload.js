@@ -224,7 +224,6 @@ window.addEventListener("DOMContentLoaded", () => {
     // // Основной цикл
 
     screenReset();
-    textField.innerHTML = `${b}`;
     i = true
     window.addEventListener("keydown", (e) => {
       if (i == true) {
