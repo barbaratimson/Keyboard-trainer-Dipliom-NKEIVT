@@ -18,7 +18,6 @@
 }
 
 
-
 .menu {
   width:10.05%;
   display: grid;
@@ -28,7 +27,7 @@
   transition: all .4s;
 }
 
-#btnRow {
+#btnRow { 
   transform: translate3d(var(--a), 0, 0);
 }
 
@@ -101,6 +100,8 @@
 
 .mainText {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -111,6 +112,7 @@
   width: 1000px;
   height: 60px;
   overflow: hidden;
+  margin-left:10px;
   background-color: rgba(155, 155, 155, 0.5);
   border: 1px groove white;
 }
@@ -213,9 +215,19 @@ nav > .nav-section {
 }
 
 #navbar:not(:hover) {
-  animation: WhiteToBack .4s ease-in;
+  animation: WhiteToBack 1s ease;
 }
 
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
 
 
 #nav-center:hover .color-white {
@@ -232,4 +244,9 @@ nav > .nav-section {
   font-size: 19px;
 }
 
-
+.adminMenu {
+  position: absolute;
+  display: grid;
+  top: 10%;
+  left: 47%;
+}

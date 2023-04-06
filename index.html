@@ -27,32 +27,37 @@
 
     <div class="menu" id = "btnRow">
         <button id = "hide" class="btn color-white"><i class="fa-sharp fa-regular fa-arrow-right fa-rotate-270" style="font-size: 20px;"></i></button>
-        <button class="btn btn-text color-white"  id="task1">Task 1</button>
-        <button class="btn btn-text color-white"  id="task2">Task 2</button>
-        <button class="btn btn-text color-white" id="task3">Custom from file</button>
+        <button class="btn btn-text color-white noselect"  id="task1">Task 1</button>
+        <button class="btn btn-text color-white noselect"  id="task2">Task 2</button>
+        <button class="btn btn-text color-white noselect" id="task3">Custom from file</button>
     </div>
 
 <!-- Right Menu -->
     <div class="menu" id = "stats">
      <button id = "hide2" class="btn btn-text color-white" ><i class="fa-sharp fa-regular fa-arrow-right fa-rotate-270" style="font-size: 20px;"></i></button>
-        <div class="score btn-text color-white" id="score">Score</div>
-        <div class="ae btn-text color-white" id = "ae">Average errors</div>
-        <div class="ct btn-text color-white" id = "ct">Completed Tasks</div>
+        <div class="score btn-text color-white" id="score">Score:</div>
+        <div class="ae btn-text color-white" id = "ae">Average errors:</div>
+        <div class="ct btn-text color-white" id = "ct">Tasks:</div>
         <div id="statsRow">
                 <button id = "mode1" class="btn btn-text color-white">1 mode</button>
                 <button id = "mode2" class="btn btn-text color-white">2 mode</button>
         </div>
     </div>
 </div>
-
  <!-- Text field -->
+ 
  <div class = "mainText">
     <div id = "text-field">
     <div id = "text"></div>
     </div>
+    <div class="text-center color-white" id="errorCounterField"></div>
  </div>
 
-
+ <div class="adminMenu">
+ <button onclick="localStorage.clear()">Reset LS</button>
+ <button id="alertData">Alert LS</button>
+ <button id="resetScreen">RS Screen</button>
+</div>
 </body>
 <footer>
     <div class="text-center color-white" id = "f1">Sergey Sokolov</div>
