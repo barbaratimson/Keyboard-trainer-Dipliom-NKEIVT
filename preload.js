@@ -9,12 +9,11 @@ window.addEventListener("DOMContentLoaded", () => {
     let score = 0;
     let completedTasks = 0
     let allErrors = 0
+    let averageErrors1 = 0
     let textField = document.getElementById("text");
     let countdownField = document.getElementById("countdown")
     b = "Welcome!"
-
     let task1 = document.getElementById("task1");
-
     let btnHideTasksMenu = document.getElementById("hide");
     let buttonRow = document.getElementById("btnRow");
     let statsRow = document.getElementById("stats");
@@ -34,39 +33,25 @@ window.addEventListener("DOMContentLoaded", () => {
     let maxErrors = 0
     audio.volume = 0.2;
     audio1.volume = 0.2;
-    let averageErrors1 = 0
-    averageErrors1 = Math.floor(allErrors/completedTasks)
     errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
-    // const userData = (a) => {
-    //   data = [score=score,averageErrors=Math.floor(allErrors/completedTasks),completedTasks=completedTasks,allErrors=allErrors]
-    //   switch(a) {
-    //   case "set":
-    //       localStorage.setItem("userData",data)
-    //   case "get":
-    //      d =  localStorage.getItem("userData")
-    //      if (d){
-    //      score = d[score]
-    //      averageErrors1 = d[averageErrors]
-    //      completedTasks = d[completedTasks]
-    //      allErrors = d[allErrors]
-    //      }
-    //     alert(d)
-    //     console.log(d[score])
-    //   }
-    // }  
-   let alertData = document.getElementById("alertData")
-   alertData.addEventListener("click",() =>{
-    console.log(allErrors)
-    console.log(averageErrors1)
-  })
-    
-//   let resetScreen = document.getElementById("resetScreen")
-//   resetScreen.addEventListener("click",() =>{
-//    screenReset()
-//    console.log(score)
-//  })
+    // Saving data to localstorage
+    const  userData = (a) => {
+      switch(a) {
+      case 1:
+          localStorage.setItem("userScore",score)
+          localStorage.setItem("userErrors",allErrors)
+          localStorage.setItem("userTasks",completedTasks)
+          localStorage.setItem("userAVE",averageErrors1)
+      case 2:
+        score = localStorage.getItem("userScore")
+        allErrors =  localStorage.getItem("userErrors")
+        completedTasks = localStorage.getItem("userTasks")
+        averageErrors1 = localStorage.getItem("userAVE")
+      }
+    }  
 
 
+    // Ascii generator
     const generate = () => {
       var randomNum =
         0 + parseInt(Math.floor(Math.random() * (127 - 33 + 1) + 33));
@@ -98,17 +83,24 @@ window.addEventListener("DOMContentLoaded", () => {
       errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
       hideMenus()
     }
-
-    const timer = () => {
+    // Tasks timer
+    const timer = (time) => {    //Пофиксить возможность двойного нажатия 
       var start = Date.now();
-    setInterval(function() {
-    var delta = Date.now() - start; // milliseconds elapsed since start
-    timerField.innerHTML = Math.floor(delta / 1000)// in seconds
-    // alternatively just show wall clock time:
-
-    } , 1000); // update about every second
+      time = time*60
+      timerField.innerHTML = `${time}s left`
+    ad = setInterval(function() {
+    var delta = Date.now() - start; 
+    curr = Math.floor(delta / 1000)
+    let timeLeft = time-curr
+    timerField.innerHTML = `${timeLeft}s left`
+    if (timeLeft === 0) {
+      i = false
+      textField.innerHTML = "Time out"
+      clearInterval(ad)
+      timerLimit = 0
     }
-    //Чтение файлов
+    } , 1000);
+    }
   
     // Открытие и скрытие меню заданий
     const hideMenus = ()=> {
@@ -166,6 +158,7 @@ window.addEventListener("DOMContentLoaded", () => {
       maxErrors = 7
       i=true
       screenReset()
+      timer(0.1)
     });
   
     // Задание 2
@@ -213,7 +206,7 @@ window.addEventListener("DOMContentLoaded", () => {
         }
         else{
           i = false
-          alert("Error on read: File must be txt")
+          alert("Error on read: File must be .txt")
         }
         };
       };
@@ -222,7 +215,7 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   
     // // Основной цикл
-
+    userData(2)
     screenReset();
     i = true
     window.addEventListener("keydown", (e) => {
@@ -252,17 +245,19 @@ window.addEventListener("DOMContentLoaded", () => {
               if (b.length == 0) {
                 i = false;
                 textField.innerHTML = "Congratulations";
-
                 score = score + 100
                 completedTasks++
+                averageErrors1 = Math.floor(allErrors/completedTasks)
                 completedTasks1.innerHTML = `Tasks: ${completedTasks}`
                 score1.innerHTML = `Score: ${score}`
+                userData(1)
               }
             } else {
               // xmarkAnimation();
               audio1.play();
               errorCounter++;
               allErrors++
+              averageErrors1 = Math.floor(allErrors/completedTasks)
               averageErrors.innerHTML = `Average errors: ${averageErrors1}`
               
               errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
