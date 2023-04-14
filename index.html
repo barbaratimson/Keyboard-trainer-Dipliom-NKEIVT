@@ -30,6 +30,7 @@
         <button class="btn btn-text color-white"  id="task1">Task 1</button>
         <button class="btn btn-text color-white"  id="task2">Task 2</button>
         <button class="btn btn-text color-white" id="task3">Custom from file</button>
+        <button class="btn btn-text color-white" id="createCustomTask">Create custom task</button>
     </div>
 
 <!-- Right Menu -->
@@ -57,7 +58,24 @@
  <div class="adminMenu">
  <button onclick="localStorage.clear()">Reset LS</button>
 </div>
+<div id = "customTaskPanel" style = "display: none;">
+    <div class = "menu">
+    <button id = "customTaskClose" class="btn btn-text color-white"><i class="fa-sharp fa-regular fa-arrow-right fa-rotate-270" style="font-size: 20px;"></i></button>
+    <input id = "taskName" type="text" class="inputField" placeholder="Task name">
+    <input id = "maximumErrors" type="number"  min="0" max = "20" class="inputField" placeholder="Maximum errors(0 = OFF)">
+    <input id = "timerTime" type="number" min="1" max = "20" class="inputField" placeholder="Time in seconds">
+    <textarea id="taskTextField" cols="30" rows="10" placeholder="Task text" class="inputField"></textarea>
+    <button id = "customTaskSubmit" class="btn btn-text color-white">Create task</button>
+    </div>
+</div>
+
+
 </body>
+
+
+
+
+
 <footer>
     <div class="text-center color-white" id = "f1">Sergey Sokolov</div>
  </footer>

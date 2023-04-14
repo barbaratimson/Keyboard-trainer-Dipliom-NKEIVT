@@ -1,9 +1,15 @@
+
 window.addEventListener("DOMContentLoaded", () => {
     // let section
     let navbar = document.getElementById("navbar")
     let tasksMenu = document.getElementById("tasks-menu");
     let statsMenu = document.getElementById("stats-menu");
     let menus = document.getElementById("menus")
+
+    let customTaskPanel = document.getElementById("customTaskPanel")
+    let customTaskSubmit = document.getElementById("customTaskSubmit")
+    let customTaskButton = document.getElementById("createCustomTask")
+    let customTaskCloseButton = document.getElementById("customTaskClose")
     let i = false;
     let errorCounter = 0;
     let score = 0;
@@ -34,6 +40,9 @@ window.addEventListener("DOMContentLoaded", () => {
     audio.volume = 0.2;
     audio1.volume = 0.2;
     errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
+
+    
+
     // Saving data to localstorage
     const  userData = (a) => {
       switch(a) {
@@ -49,7 +58,63 @@ window.addEventListener("DOMContentLoaded", () => {
         averageErrors1 = localStorage.getItem("userAVE")
       }
     }  
+    
+    //Custom task menu button
+    customTaskButton.addEventListener("click",()=> {
+      customTaskPanel.style.display = "contents"
 
+      setTimeout(() => {
+        buttonRow.style.setProperty("--a", -800 + "px");
+      },100)
+      setTimeout(() => {
+        menus.style.display = "none"
+      },300)
+    })
+
+    customTaskCloseButton.addEventListener("click",()=> {
+        customTaskPanel.style.display = "none"
+    })
+
+    //Custom tasks 
+    customTaskSubmit.addEventListener(("click"), ()=> {
+      let taskName = document.getElementById("taskName").value
+      let taskTextField = document.getElementById("taskTextField").value
+      let maximumErrors = document.getElementById("maximumErrors").value
+      let timerTime = document.getElementById("timerTime").value
+      if (taskName && taskTextField && maximumErrors && timerTime) {
+
+      let fileData = {taskText:taskTextField,maxErrors:maximumErrors,timerTime:timerTime}
+
+    var textFileAsBlob = new Blob([JSON.stringify(fileData)], {type:'text/plain'});
+    var fileNameToSaveAs = taskName;
+      var downloadLink = document.createElement("a");
+    downloadLink.download = fileNameToSaveAs;
+    downloadLink.innerHTML = "Download File";
+    if (window.webkitURL != null)
+    {
+        // Chrome allows the link to be clicked
+        // without actually adding it to the DOM.
+        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
+    }
+    else
+    {
+        // Firefox requires the link to be added to the DOM
+        // before it can be clicked.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+
+    downloadLink.click();
+
+  } else {
+    alert("Empty fields")
+  }
+
+    })
+
+    
 
     // Ascii generator
     const generate = () => {
@@ -57,13 +122,11 @@ window.addEventListener("DOMContentLoaded", () => {
         0 + parseInt(Math.floor(Math.random() * (127 - 33 + 1) + 33));
         return randomNum
     }
+    
 
-    navbar.onpointerenter = e => {
-      decimal =  e.clientX
-      const x = decimal
-      navbar.style.setProperty("--x", x + "px");
-    }
-      
+
+    // Navbar animation
+
 
     navbar.onpointermove = e => {
         decimal =  e.clientX
@@ -74,6 +137,10 @@ window.addEventListener("DOMContentLoaded", () => {
       }
   
 
+
+
+    // Resetting screen
+
     const screenReset = () => {
       errorCounter = 0
       textField.innerHTML = `${b}`;
@@ -83,10 +150,14 @@ window.addEventListener("DOMContentLoaded", () => {
       errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
       hideMenus()
     }
+
+
+
     // Tasks timer
-    const timer = (time) => {    //Пофиксить возможность двойного нажатия 
+    const timer = (time) => {  
+     //Пофиксить возможность двойного нажатия 
       var start = Date.now();
-      time = time*60
+      time = time
       timerField.innerHTML = `${time}s left`
     ad = setInterval(function() {
     var delta = Date.now() - start; 
@@ -102,7 +173,8 @@ window.addEventListener("DOMContentLoaded", () => {
     } , 1000);
     }
   
-    // Открытие и скрытие меню заданий
+
+    // Скрытие блока меню
     const hideMenus = ()=> {
       setTimeout(() => {
         menus.style.display = "none"
@@ -111,19 +183,19 @@ window.addEventListener("DOMContentLoaded", () => {
       statsRow.style.setProperty("--b", 800 + "px");
     }
 
-
+    // Открытие и скрытие меню заданий
     tasksMenu.addEventListener("click", () => {
       menus.style.display = "flex"
       setTimeout(() => {
         buttonRow.style.setProperty("--a", 0);
-      },100)
+      },10)
     });
   
     btnHideTasksMenu.addEventListener("click", () => {
       buttonRow.style.setProperty("--a", -800 + "px");
       setTimeout(() => {
         menus.style.display = "none"
-      },100)
+      },10)
     });
   
     // Открытие и скрытие меню статистики
@@ -131,7 +203,7 @@ window.addEventListener("DOMContentLoaded", () => {
       menus.style.display = "flex"
       setTimeout(() => {
       statsRow.style.setProperty("--b", 0 + "px");
-    },100)
+    },10)
     });
   
     statsHideMenu.addEventListener("click", () => {
@@ -141,11 +213,17 @@ window.addEventListener("DOMContentLoaded", () => {
       },100)
     });
   
+
+
+
     // Task 1
     task1.addEventListener("click", () => {
+      let max = prompt("Symbols count")
+      Number(max)
+      if (max){
       b = ""
       e = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < max; i++) {
         a = Math.round(Math.random());
         if (a == 1) {
           e.push("a");
@@ -155,16 +233,21 @@ window.addEventListener("DOMContentLoaded", () => {
       }
       e = e.join("");
       b = e;
-      maxErrors = 7
+      maxErrors = Math.floor(max*0.5) 
       i=true
       screenReset()
-      timer(0.1)
+      max = +max + (max/2)
+      timer(max)
+    }
     });
   
-    // Задание 2
+    // Task 2
     task2.addEventListener("click", () => {
+      let max = prompt("Symbols count")
+      Number(max)
+      if (max) {
       b = ""
-      for (counter = 0; counter <= 9; counter++) {
+      for (counter = 0; counter <= max; counter++) {
         rNum = generate()
           if (rNum >32 && rNum !== 127) {
         b += String.fromCharCode(rNum);
@@ -175,10 +258,14 @@ window.addEventListener("DOMContentLoaded", () => {
           }
       }
       i = true;
-      maxErrors = 10
+      maxErrors = Math.floor(max*1.2)
       screenReset();
+      timer(max*3)
+    }
     });
 
+
+    // Task 3
     task3.addEventListener("click", () => {
       b = ""
       var input = document.createElement("input");
@@ -189,13 +276,13 @@ window.addEventListener("DOMContentLoaded", () => {
         reader.readAsDataURL(file); 
         reader.onload = (readerEvent) => {
           var content = readerEvent.target.result; 
-
-        if (content.slice(0,9)== "data:text") {
+        if (content.slice(0,9) === "data:text") {
             content = content.substring(23);
             content = atob(content);
             data = JSON.parse(content);
             data1 = data.taskText;
             data2 = data.maxErrors;
+            data3 = data.timerTime
             data1 = JSON.stringify(data1);
             f = data1.length;
             data1 = data1.substring(1, f - 1);
@@ -203,6 +290,7 @@ window.addEventListener("DOMContentLoaded", () => {
             b = data1;
             i = true;
             screenReset()
+            timer(data3)
         }
         else{
           i = false
@@ -214,6 +302,8 @@ window.addEventListener("DOMContentLoaded", () => {
       input.click();
     });
   
+
+
     // // Основной цикл
     userData(2)
     screenReset();
