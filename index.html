@@ -8,43 +8,65 @@
     <link href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/brands.css" rel="stylesheet">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/solid.css" rel="stylesheet">
+
 </head>
 
     <!-- Navbar -->
 
     <nav id = "navbar">
-        <div id = "tasks-menu" class = "nav-section"><i class="fa-regular fa-bars color-white"></i></div>
         <div id = "nav-center" class = "nav-section">
             <div class="color-white center-text" style="margin-right: 40px;">Keyboard Trainer</div>
             </div>
-        <div id = "stats-menu" class = "nav-section"><i class="fa-sharp fa-regular fa-user color-white"></i></div>
     </nav>
-    
 
-<body id="a">
-    <div id="menus">
-    <!-- Left Menu -->
 
-    <div class="menu" id = "btnRow">
-        <button id = "hide" class="btn color-white"><i class="fa-sharp fa-regular fa-arrow-right fa-rotate-270" style="font-size: 20px;"></i></button>
+
+<body>
+
+    <div class = "mainMenu">
+        <button id = "menuClose" style = "width: 100%;"  class="btn btn-text color-white" ><i class="fa-regular fa-chevron-up fa-rotate-180" style="font-size: 20px;"></i></button>
+        <div class="line">
+           <div class = "center-text color-white">
+            Scoreboad
+           </div>
+        </div>
+        <!-- Right Menu -->
+    <div class="scoreBoard">
+           <div class="score btn-text color-white" id="score">Score:</div>
+           <div class="ae btn-text color-white" id = "ae">Average errors:</div>
+           <div class="ct btn-text color-white" id = "ct">Tasks:</div>
+    </div>
+        <div class="line">
+            <div class = "center-text color-white">
+                Tasks
+            </div>
+        </div>
+        <!-- Left Menu -->
+        <div class="taskLine">
         <button class="btn btn-text color-white"  id="task1">Task 1</button>
         <button class="btn btn-text color-white"  id="task2">Task 2</button>
         <button class="btn btn-text color-white" id="task3">Custom from file</button>
         <button class="btn btn-text color-white" id="createCustomTask">Create custom task</button>
-    </div>
-
-<!-- Right Menu -->
-    <div class="menu" id = "stats">
-     <button id = "hide2" class="btn btn-text color-white" ><i class="fa-sharp fa-regular fa-arrow-right fa-rotate-270" style="font-size: 20px;"></i></button>
-        <div class="score btn-text color-white" id="score">Score:</div>
-        <div class="ae btn-text color-white" id = "ae">Average errors:</div>
-        <div class="ct btn-text color-white" id = "ct">Tasks:</div>
-        <div id="statsRow">
-                <button id = "mode1" class="btn btn-text color-white">1 mode</button>
-                <button id = "mode2" class="btn btn-text color-white">2 mode</button>
         </div>
-    </div>
-</div>
+        
+        <div class="line">
+            <div class = "center-text color-white">
+                Custom tasks
+            </div>
+        </div>
+
+        <div class = "customTaskPanel">
+            <input id = "taskName" type="text" class="inputField" placeholder="Task name">
+            <input id = "maximumErrors" type="number"  min="0" max = "20" class="inputField" placeholder="Maximum errors(0 = OFF)">
+            <input id = "timerTime" type="number" min="1" max = "20" class="inputField" placeholder="Time in seconds">
+            <textarea id="taskTextField" cols="30" rows="10" placeholder="Task text" class="inputField"></textarea>
+            <button id = "customTaskSubmit" class="btn btn-text color-white">Create task</button>
+
+        </div>
+
+        </div>
+
+   
  <!-- Text field -->
  
  <div class = "mainText">
@@ -55,19 +77,10 @@
     <div id="timerField" class="text-center color-white">Timer</div>
  </div>
 
- <div class="adminMenu">
+ <div>
  <button onclick="localStorage.clear()">Reset LS</button>
 </div>
-<div id = "customTaskPanel" style = "display: none;">
-    <div class = "menu">
-    <button id = "customTaskClose" class="btn btn-text color-white"><i class="fa-sharp fa-regular fa-arrow-right fa-rotate-270" style="font-size: 20px;"></i></button>
-    <input id = "taskName" type="text" class="inputField" placeholder="Task name">
-    <input id = "maximumErrors" type="number"  min="0" max = "20" class="inputField" placeholder="Maximum errors(0 = OFF)">
-    <input id = "timerTime" type="number" min="1" max = "20" class="inputField" placeholder="Time in seconds">
-    <textarea id="taskTextField" cols="30" rows="10" placeholder="Task text" class="inputField"></textarea>
-    <button id = "customTaskSubmit" class="btn btn-text color-white">Create task</button>
-    </div>
-</div>
+
 
 
 </body>

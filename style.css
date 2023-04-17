@@ -17,70 +17,52 @@
   
 }
 
+.mainMenu{
+  display:flex;
+  flex-direction: column;
+  gap: 20px;
+  height: 95vh;
+  width: 95vw;
+  position: absolute;
+  background-color: var(--background-color,);
+  bottom: 100vh;
+  transition: bottom .4s;
+  left: 2.5%;
+  z-index: 1;
+  border: 2px solid var(--border-color);
 
-.menu {
-  width:10.05%;
-  display: grid;
-  background-color: var(--background-color);
-  gap:15px;
-  border: 1px solid var(--border-color);
-  transition: all .4s;
 }
 
-#btnRow { 
-  transform: translate3d(var(--a), 0, 0);
-}
-
-#btnRow:hover {
-  transform: translate3d(var(--a), 0, 0);
-}
-
-#menus {
+.scoreBoard{
   display: flex;
-  flex-direction: row;
-}
-
-#stats{
-  position: relative;
-  left: 79.9%;
-  transform: translate3d(var(--b), 0, 0);
 }
 
 
-#hide,#hide2 {
-  height: 40px;
-}
 
-#hide:hover > i {
-  rotate: -90deg;
-  transition: all .4s;
-}
-#hide:not(:hover) > i {
-  rotate: 0deg;
-  transition: all .4s;
-}
-
-#hide2:hover > i {
-  rotate: 90deg;
-  transition: all .4s;
-}
-#hide2:not(:hover) > i {
-  rotate: 0deg;
-  transition: all .4s;
-}
-#statsRow {
+.line {
   display: flex;
-  flex-direction: row;
+  width: 100%;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  justify-content: center;
 }
 
-#statsRow > #mode1 {
-  flex-basis: 50%;
+
+.customTaskPanel{
+  display:flex;
+  flex-direction: column;
 }
 
-#statsRow > #mode2 {
-  flex-grow: 1;
+
+#menuClose:hover > i {
+  transition: all .1s;
+  rotate: 180deg;
 }
 
+#menuClose:not(:hover) > i {
+  transition: all .3s;
+  rotate: 0deg;
+}
 .btn {
   border: 0;
   border-radius: 0;
@@ -180,7 +162,7 @@ footer > #f1 {
 }
 
 nav > .nav-section { 
-  padding: 2rem 2rem;
+  padding: 1rem 2rem;
   display: flex;
   gap: 1rem;
   border-left: 1px solid var(--border-color);
@@ -190,13 +172,7 @@ nav > .nav-section {
 }
 
 #nav-center {
-  flex-basis: calc(80%);
-}
-
-
-#tasks-menu,
-#stats-menu{
-  flex-grow: 1;
+  flex-basis: calc(100%);
 }
 
 #tasks-menu:hover,#stats-menu:hover {
@@ -238,12 +214,6 @@ nav > .nav-section {
   font-size: 19px;
 }
 
-.adminMenu {
-  position: absolute;
-  display: grid;
-  top: 10%;
-  left: 47%;
-}
 /* do not group these rules */
 *::-webkit-input-placeholder {
   color: rgb(161, 161, 161);

@@ -2,14 +2,14 @@
 window.addEventListener("DOMContentLoaded", () => {
     // let section
     let navbar = document.getElementById("navbar")
-    let tasksMenu = document.getElementById("tasks-menu");
-    let statsMenu = document.getElementById("stats-menu");
-    let menus = document.getElementById("menus")
+
+    let icon = document.querySelector(".fa-regular")
+    let mainMenu = document.querySelector(".mainMenu")
+    let mainMenuClose = document.getElementById("menuClose")
 
     let customTaskPanel = document.getElementById("customTaskPanel")
     let customTaskSubmit = document.getElementById("customTaskSubmit")
     let customTaskButton = document.getElementById("createCustomTask")
-    let customTaskCloseButton = document.getElementById("customTaskClose")
     let i = false;
     let errorCounter = 0;
     let score = 0;
@@ -59,21 +59,6 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     }  
     
-    //Custom task menu button
-    customTaskButton.addEventListener("click",()=> {
-      customTaskPanel.style.display = "contents"
-
-      setTimeout(() => {
-        buttonRow.style.setProperty("--a", -800 + "px");
-      },100)
-      setTimeout(() => {
-        menus.style.display = "none"
-      },300)
-    })
-
-    customTaskCloseButton.addEventListener("click",()=> {
-        customTaskPanel.style.display = "none"
-    })
 
     //Custom tasks 
     customTaskSubmit.addEventListener(("click"), ()=> {
@@ -126,8 +111,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
 
     // Navbar animation
-
-
     navbar.onpointermove = e => {
         decimal =  e.clientX
         const x = decimal
@@ -136,6 +119,31 @@ window.addEventListener("DOMContentLoaded", () => {
         },60)
       }
   
+      // Navbar show function
+     const navbarShow = () => {
+      mainMenu.style.display = "flex"
+      setTimeout(()=> {
+        mainMenu.style.bottom = "2.5%"
+      },100)
+     }
+
+     // Navbar hide function
+     const navbarHide = () => {
+      mainMenu.style.bottom = "100vh"
+      setTimeout(()=> {
+        mainMenu.style.display = "none"
+      },400)
+     }
+
+       // Navbar click to show listener
+      navbar.addEventListener("click", ()=> {
+        navbarShow()
+      })
+
+      // Navbar hide button listener
+      mainMenuClose.addEventListener("click", ()=> {
+        navbarHide()
+      })
 
 
 
@@ -148,7 +156,7 @@ window.addEventListener("DOMContentLoaded", () => {
       completedTasks1.innerHTML = `Tasks: ${completedTasks}`
       averageErrors.innerHTML = `Average errors: ${averageErrors1}`
       errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
-      hideMenus()
+      mainMenu.style.bottom = "100vh"
     }
 
 
@@ -172,46 +180,6 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     } , 1000);
     }
-  
-
-    // Скрытие блока меню
-    const hideMenus = ()=> {
-      setTimeout(() => {
-        menus.style.display = "none"
-      },100)
-      buttonRow.style.setProperty("--a", -800 + "px");
-      statsRow.style.setProperty("--b", 800 + "px");
-    }
-
-    // Открытие и скрытие меню заданий
-    tasksMenu.addEventListener("click", () => {
-      menus.style.display = "flex"
-      setTimeout(() => {
-        buttonRow.style.setProperty("--a", 0);
-      },10)
-    });
-  
-    btnHideTasksMenu.addEventListener("click", () => {
-      buttonRow.style.setProperty("--a", -800 + "px");
-      setTimeout(() => {
-        menus.style.display = "none"
-      },10)
-    });
-  
-    // Открытие и скрытие меню статистики
-    statsMenu.addEventListener("click", () => {
-      menus.style.display = "flex"
-      setTimeout(() => {
-      statsRow.style.setProperty("--b", 0 + "px");
-    },10)
-    });
-  
-    statsHideMenu.addEventListener("click", () => {
-      statsRow.style.setProperty("--b", 800 + "px");
-      setTimeout(() => {
-        menus.style.display = "none"
-      },100)
-    });
   
 
 
