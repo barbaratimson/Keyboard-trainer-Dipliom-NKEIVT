@@ -110,7 +110,7 @@ window.addEventListener("DOMContentLoaded", () => {
         return randomNum
     }
     
-    //Scan tasks derictory
+    //Scan tasks directory
     scanTasks.addEventListener("click", ()=> {
       let scanField = document.querySelector(".tasksScanField")
       while (scanField.firstChild) {
@@ -138,7 +138,7 @@ window.addEventListener("DOMContentLoaded", () => {
           });
 
          })
-          const content = document.createTextNode(`${file}`);
+          const content = document.createTextNode(`${file.replace(".txt","")}`);
           newDiv.appendChild(content);
           document.querySelector(".tasksScanField").appendChild(newDiv)
         }
