@@ -121,6 +121,9 @@ window.addEventListener("DOMContentLoaded", () => {
         if (file.substring(file.length-3) == "txt"){
          const newDiv = document.createElement("button")
          newDiv.setAttribute("id",`taskCreated`)
+         newDiv.classList.add("btn")
+         newDiv.classList.add("btn-text")
+         newDiv.classList.add("color-white")
          newDiv.addEventListener("click",() => {
           fs.readFile(`./user/${file}`, 'utf8', function(err, content) {
             data = JSON.parse(content);
@@ -150,14 +153,6 @@ window.addEventListener("DOMContentLoaded", () => {
       });
     })
     
-    const tasksOpen = (file) => {
-      fs.readFile(`./user/${file}`, 'utf8', function(err, data) {
-        if (err) throw err;
-        console.log('OK: ' + file);
-        console.log(data)
-      });
-    }
-
     // Navbar animation
     navbar.onpointermove = e => {
         decimal =  e.clientX
