@@ -46,7 +46,10 @@
         <button class="btn btn-text color-white"  id="task1">Task 1</button>
         <button class="btn btn-text color-white"  id="task2">Task 2</button>
         <button class="btn btn-text color-white" id="task3">Custom from file</button>
-        <button class="btn btn-text color-white" id="createCustomTask">Create custom task</button>
+        <button class="btn btn-text color-white" id="scanTasks">Scan tasks dir</button>
+        </div>
+        <div class = "tasksScanField">
+            
         </div>
         
         <div class="line">
@@ -56,9 +59,26 @@
         </div>
 
         <div class = "customTaskPanel">
+            <div class="fields">
+            <div class="block">
+                <div class="center-text color-white">
+                Task name: 
+                </div>
             <input id = "taskName" type="text" class="inputField" placeholder="Task name">
+            </div>
+            <div class="block">
+                <div class="center-text color-white">
+                Maximum errors: 
+                </div>
             <input id = "maximumErrors" type="number"  min="0" max = "20" class="inputField" placeholder="Maximum errors(0 = OFF)">
+            </div>
+            <div class="block">
+                <div class="center-text color-white">
+                Time in seconds: 
+                </div>
             <input id = "timerTime" type="number" min="1" max = "20" class="inputField" placeholder="Time in seconds">
+            </div>
+            </div>
             <textarea id="taskTextField" cols="30" rows="10" placeholder="Task text" class="inputField"></textarea>
             <button id = "customTaskSubmit" class="btn btn-text color-white">Create task</button>
 

@@ -1,4 +1,4 @@
-
+const fs=require('fs');
 window.addEventListener("DOMContentLoaded", () => {
     // let section
     let navbar = document.getElementById("navbar")
@@ -6,6 +6,8 @@ window.addEventListener("DOMContentLoaded", () => {
     let icon = document.querySelector(".fa-regular")
     let mainMenu = document.querySelector(".mainMenu")
     let mainMenuClose = document.getElementById("menuClose")
+
+    let scanTasks = document.getElementById("scanTasks")
 
     let customTaskPanel = document.getElementById("customTaskPanel")
     let customTaskSubmit = document.getElementById("customTaskSubmit")
@@ -108,7 +110,53 @@ window.addEventListener("DOMContentLoaded", () => {
         return randomNum
     }
     
+    //Scan tasks derictory
+    scanTasks.addEventListener("click", ()=> {
+      let scanField = document.querySelector(".tasksScanField")
+      while (scanField.firstChild) {
+        scanField.removeChild(scanField.lastChild);
+      }
+      fs.readdir("./user", (err, files) => {
+        files.forEach(file => {
+        if (file.substring(file.length-3) == "txt"){
+         const newDiv = document.createElement("button")
+         newDiv.setAttribute("id",`taskCreated`)
+         newDiv.addEventListener("click",() => {
+          fs.readFile(`./user/${file}`, 'utf8', function(err, content) {
+            data = JSON.parse(content);
+            data1 = data.taskText;
+            data2 = data.maxErrors;
+            data3 = data.timerTime
+            data1 = JSON.stringify(data1);
+            f = data1.length;
+            data1 = data1.substring(1, f - 1);
+            maxErrors = data2
+            b = data1;
+            i = true;
+            screenReset()
+            timer(data3)
+          });
 
+         })
+          const content = document.createTextNode(`${file}`);
+          newDiv.appendChild(content);
+          document.querySelector(".tasksScanField").appendChild(newDiv)
+        }
+        else {
+          alert(`Not txt format on: ${file}`)
+        }
+        });
+        
+      });
+    })
+    
+    const tasksOpen = (file) => {
+      fs.readFile(`./user/${file}`, 'utf8', function(err, data) {
+        if (err) throw err;
+        console.log('OK: ' + file);
+        console.log(data)
+      });
+    }
 
     // Navbar animation
     navbar.onpointermove = e => {
@@ -233,43 +281,6 @@ window.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    // Task 3
-    task3.addEventListener("click", () => {
-      b = ""
-      var input = document.createElement("input");
-      input.type = "file";
-      input.onchange = (e) => {
-        var file = e.target.files[0];
-        var reader = new FileReader();
-        reader.readAsDataURL(file); 
-        reader.onload = (readerEvent) => {
-          var content = readerEvent.target.result; 
-        if (content.slice(0,9) === "data:text") {
-            content = content.substring(23);
-            content = atob(content);
-            data = JSON.parse(content);
-            data1 = data.taskText;
-            data2 = data.maxErrors;
-            data3 = data.timerTime
-            data1 = JSON.stringify(data1);
-            f = data1.length;
-            data1 = data1.substring(1, f - 1);
-            maxErrors = data2
-            b = data1;
-            i = true;
-            screenReset()
-            timer(data3)
-        }
-        else{
-          i = false
-          alert("Error on read: File must be .txt")
-        }
-        };
-      };
-  
-      input.click();
-    });
-  
 
 
     // // Основной цикл
