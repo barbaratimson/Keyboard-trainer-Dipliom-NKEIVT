@@ -3,15 +3,12 @@ window.addEventListener("DOMContentLoaded", () => {
     // let section
     let navbar = document.getElementById("navbar")
 
-    let icon = document.querySelector(".fa-regular")
     let mainMenu = document.querySelector(".mainMenu")
     let mainMenuClose = document.getElementById("menuClose")
 
     let scanTasks = document.getElementById("scanTasks")
 
-    let customTaskPanel = document.getElementById("customTaskPanel")
     let customTaskSubmit = document.getElementById("customTaskSubmit")
-    let customTaskButton = document.getElementById("createCustomTask")
     let i = false;
     let errorCounter = 0;
     let score = 0;
@@ -19,22 +16,13 @@ window.addEventListener("DOMContentLoaded", () => {
     let allErrors = 0
     let averageErrors1 = 0
     let textField = document.getElementById("text");
-    let countdownField = document.getElementById("countdown")
     b = "Welcome!"
     let task1 = document.getElementById("task1");
-    let btnHideTasksMenu = document.getElementById("hide");
-    let buttonRow = document.getElementById("btnRow");
-    let statsRow = document.getElementById("stats");
-    let statsHideMenu = document.getElementById("hide2");
-    let body = document.getElementById("body");
-    let field1 = document.getElementById("keybox");
     let averageErrors = document.getElementById("ae");
-    let xmark = document.getElementById("xmark");
     let completedTasks1 = document.getElementById("ct")
     let errorCounterField = document.getElementById("errorCounterField");
     let timerField = document.getElementById("timerField");
     let task2 = document.getElementById("task2");
-    let task3 = document.getElementById("task3");
     let score1 = document.getElementById("score");
     let audio1 = new Audio("sound.mp3");
     let audio = new Audio("sound2.mp3");
@@ -69,32 +57,14 @@ window.addEventListener("DOMContentLoaded", () => {
       let maximumErrors = document.getElementById("maximumErrors").value
       let timerTime = document.getElementById("timerTime").value
       if (taskName && taskTextField && maximumErrors && timerTime) {
-
       let fileData = {taskText:taskTextField,maxErrors:maximumErrors,timerTime:timerTime}
-
-    var textFileAsBlob = new Blob([JSON.stringify(fileData)], {type:'text/plain'});
-    var fileNameToSaveAs = taskName;
-      var downloadLink = document.createElement("a");
-    downloadLink.download = fileNameToSaveAs;
-    downloadLink.innerHTML = "Download File";
-    if (window.webkitURL != null)
-    {
-        // Chrome allows the link to be clicked
-        // without actually adding it to the DOM.
-        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-    }
-    else
-    {
-        // Firefox requires the link to be added to the DOM
-        // before it can be clicked.
-        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        downloadLink.onclick = destroyClickedElement;
-        downloadLink.style.display = "none";
-        document.body.appendChild(downloadLink);
-    }
-
-    downloadLink.click();
-
+      fs.writeFile(`./User/customTasks/${taskName}.txt`, `${JSON.stringify(fileData)}`, function(err) {
+        alert(`Task ${taskName} created!`)
+        if(err) {
+            return alert(err);
+        }
+        console.log("The file was saved!");
+    }); 
   } else {
     alert("Empty fields")
   }
@@ -116,7 +86,7 @@ window.addEventListener("DOMContentLoaded", () => {
       while (scanField.firstChild) {
         scanField.removeChild(scanField.lastChild);
       }
-      fs.readdir("./user", (err, files) => {
+      fs.readdir("./user/customTasks", (err, files) => {
         files.forEach(file => {
         if (file.substring(file.length-3) == "txt"){
          const newDiv = document.createElement("button")
@@ -125,7 +95,7 @@ window.addEventListener("DOMContentLoaded", () => {
          newDiv.classList.add("btn-text")
          newDiv.classList.add("color-white")
          newDiv.addEventListener("click",() => {
-          fs.readFile(`./user/${file}`, 'utf8', function(err, content) {
+          fs.readFile(`./user/customTasks/${file}`, 'utf8', function(err, content) {
             data = JSON.parse(content);
             data1 = data.taskText;
             data2 = data.maxErrors;
@@ -146,7 +116,7 @@ window.addEventListener("DOMContentLoaded", () => {
           document.querySelector(".tasksScanField").appendChild(newDiv)
         }
         else {
-          alert(`Not txt format on: ${file}`)
+          alert(`Wrong format on: ${file}`)
         }
         });
         
