@@ -1,11 +1,10 @@
-const fs=require('fs');
+const fs = require('fs');
 window.addEventListener("DOMContentLoaded", () => {
     // let section
     let navbar = document.getElementById("navbar")
 
     let mainMenu = document.querySelector(".mainMenu")
     let mainMenuClose = document.getElementById("menuClose")
-
     let scanTasks = document.getElementById("scanTasks")
 
     let customTaskSubmit = document.getElementById("customTaskSubmit")
@@ -31,8 +30,54 @@ window.addEventListener("DOMContentLoaded", () => {
     audio1.volume = 0.2;
     errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
 
-    
+    const taskConfirmWindow = (taskName,taskText,errors,time) => {
 
+    }
+    
+    // document.getElementById("stopTimer").addEventListener("click", () => {
+    //   timer(false)
+    // }) 
+  
+    const alertMessage = (title,message) => {
+      const alertBox = document.querySelector(".alertBox")
+      alertBox.style.display="flex"
+      const window = document.createElement("div")
+      const titleLine = document.createElement("div")
+      const closeButton = document.createElement("button")
+      const titleText = document.createTextNode(title)
+      const contentLine = document.createElement("div")
+      const contentField = document.createTextNode(message);
+      window.classList.add("alert")
+      titleLine.setAttribute("id","titleLine")
+      titleLine.classList.add("center-text")
+      titleLine.classList.add("color-white")
+      contentLine.setAttribute("id","contentLine")
+      contentLine.classList.add("center-text")
+      contentLine.classList.add("color-white")
+      closeButton.classList.add("btn")
+      closeButton.classList.add("btn-text")
+      closeButton.classList.add("color-white")
+      closeButton.innerHTML = "Close"
+      titleLine.appendChild(titleText)
+      contentLine.appendChild(contentField)
+      window.appendChild(titleLine)
+      window.appendChild(contentLine)
+      window.appendChild(closeButton)
+      closeButton.addEventListener ("click", ()=> {
+        alertBox.style.display="none"
+        // clearInterval(lifetime)
+        while (alertBox.firstChild) {
+          alertBox.removeChild(alertBox.lastChild);
+        }
+      })
+      alertBox.appendChild(window)
+      // const lifetime = setInterval(()=>{
+      //   alertBox.style.display="none"
+      //   while (alertBox.firstChild) {
+      //     alertBox.removeChild(alertBox.lastChild);
+      //   }
+      // },5000)
+    }
     // Saving data to localstorage
     const  userData = (a) => {
       switch(a) {
@@ -59,14 +104,13 @@ window.addEventListener("DOMContentLoaded", () => {
       if (taskName && taskTextField && maximumErrors && timerTime) {
       let fileData = {taskText:taskTextField,maxErrors:maximumErrors,timerTime:timerTime}
       fs.writeFile(`./User/customTasks/${taskName}.txt`, `${JSON.stringify(fileData)}`, function(err) {
-        alert(`Task ${taskName} created!`)
         if(err) {
             return alert(err);
         }
-        console.log("The file was saved!");
+        alertMessage("Message:",`Task ${taskName} created!`)
     }); 
   } else {
-    alert("Empty fields")
+    alertMessage("Error!",`Empty Fields`)
   }
 
     })
@@ -106,6 +150,7 @@ window.addEventListener("DOMContentLoaded", () => {
             maxErrors = data2
             b = data1;
             i = true;
+            console.log()
             screenReset()
             timer(data3)
           });
@@ -116,7 +161,7 @@ window.addEventListener("DOMContentLoaded", () => {
           document.querySelector(".tasksScanField").appendChild(newDiv)
         }
         else {
-          alert(`Wrong format on: ${file}`)
+          alertMessage("Error!",`Wrong format on: ${file}`)
         }
         });
         
@@ -136,7 +181,7 @@ window.addEventListener("DOMContentLoaded", () => {
      const navbarShow = () => {
       mainMenu.style.display = "flex"
       setTimeout(()=> {
-        mainMenu.style.bottom = "2.5%"
+        mainMenu.style.bottom = "3%"
       },100)
      }
 
@@ -176,11 +221,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Tasks timer
     const timer = (time) => {  
+  
      //Пофиксить возможность двойного нажатия 
       var start = Date.now();
       time = time
       timerField.innerHTML = `${time}s left`
-    ad = setInterval(function() {
+    const ad = setInterval(function() {
     var delta = Date.now() - start; 
     curr = Math.floor(delta / 1000)
     let timeLeft = time-curr
@@ -189,7 +235,6 @@ window.addEventListener("DOMContentLoaded", () => {
       i = false
       textField.innerHTML = "Time out"
       clearInterval(ad)
-      timerLimit = 0
     }
     } , 1000);
     }
@@ -204,6 +249,7 @@ window.addEventListener("DOMContentLoaded", () => {
       if (max){
       b = ""
       e = [];
+      timer(false)
       for (let i = 0; i < max; i++) {
         a = Math.round(Math.random());
         if (a == 1) {

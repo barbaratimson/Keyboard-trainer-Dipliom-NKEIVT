@@ -22,7 +22,6 @@
 
 
 <body>
-
     <div class = "mainMenu">
         <button id = "menuClose" style = "width: 100%;"  class="btn btn-text color-white" ><i class="fa-regular fa-chevron-up fa-rotate-180" style="font-size: 20px;"></i></button>
         <div class="line">
@@ -43,15 +42,12 @@
         </div>
         <!-- Left Menu -->
         <div class="taskLine">
-        <button class="btn btn-text color-white"  id="task1">Task 1</button>
-        <button class="btn btn-text color-white"  id="task2">Task 2</button>
-        <button class="btn btn-text color-white" id="task3">Custom from file</button>
-        <button class="btn btn-text color-white" id="scanTasks">Scan tasks dir</button>
+        <button class="btn btn-text color-white btn-border"  id="task1">Task 1</button>
+        <button class="btn btn-text color-white btn-border"  id="task2">Task 2</button>
+        <button class="btn btn-text color-white btn-border" id="task3">Custom from file</button>
+        <button class="btn btn-text color-white btn-border" id="scanTasks">Scan tasks dir</button>
         </div>
-        <div class = "tasksScanField">
-            
-        </div>
-        
+        <div class = "tasksScanField"></div>
         <div class="line">
             <div class = "center-text color-white">
                 Custom tasks
@@ -85,7 +81,6 @@
         </div>
 
         </div>
-
    
  <!-- Text field -->
  
@@ -99,9 +94,10 @@
 
  <div>
  <button onclick="localStorage.clear()">Reset LS</button>
+ <button id = "stopTimer">StopTimer</button>
 </div>
 
-
+<div class = "alertBox"></div>
 
 </body>
 
