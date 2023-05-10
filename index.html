@@ -44,15 +44,14 @@
         <div class="taskLine">
         <button class="btn btn-text color-white btn-border"  id="task1">Task 1</button>
         <button class="btn btn-text color-white btn-border"  id="task2">Task 2</button>
-        <button class="btn btn-text color-white btn-border" id="task3">Custom from file</button>
-        <button class="btn btn-text color-white btn-border" id="scanTasks">Scan tasks dir</button>
         </div>
         <div class = "tasksScanField"></div>
+        <button class="btn btn-text color-white btn-border" id="scanTasks">Scan tasks dir</button>
         <div class="line">
             <div class = "center-text color-white">
                 Custom tasks
             </div>
-        </div>
+        </div> 
 
         <div class = "customTaskPanel">
             <div class="fields">
@@ -66,13 +65,13 @@
                 <div class="center-text color-white">
                 Maximum errors: 
                 </div>
-            <input id = "maximumErrors" type="number"  min="0" max = "20" class="inputField" placeholder="Maximum errors(0 = OFF)">
+            <input id = "maximumErrors" type="number"  min="0" class="inputField" placeholder="Maximum errors(0 = OFF)">
             </div>
             <div class="block">
                 <div class="center-text color-white">
                 Time in seconds: 
                 </div>
-            <input id = "timerTime" type="number" min="1" max = "20" class="inputField" placeholder="Time in seconds">
+            <input id = "timerTime" type="number" min="1" class="inputField" placeholder="Time in seconds">
             </div>
             </div>
             <textarea id="taskTextField" cols="30" rows="10" placeholder="Task text" class="inputField"></textarea>
@@ -98,6 +97,8 @@
 </div>
 
 <div class = "alertBox"></div>
+<div class = "confirmBox"></div>
+<div class = "askBox"></div>
 
 </body>
 

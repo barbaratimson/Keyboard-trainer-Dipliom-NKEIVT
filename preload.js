@@ -7,6 +7,9 @@ window.addEventListener("DOMContentLoaded", () => {
     let mainMenuClose = document.getElementById("menuClose")
     let scanTasks = document.getElementById("scanTasks")
 
+    let timersRunning = 0
+    let timerTime = 0
+
     let customTaskSubmit = document.getElementById("customTaskSubmit")
     let i = false;
     let errorCounter = 0;
@@ -31,16 +34,65 @@ window.addEventListener("DOMContentLoaded", () => {
     errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
 
     const taskConfirmWindow = (taskName,taskText,errors,time) => {
+      const askBox = document.querySelector(".askBox")
+      const confirmWindow = document.createElement("div")
+      confirmWindow.classList.add("confirmWindow")
+      const closeButton = document.createElement("button")
+      const name = document.createTextNode(taskName)
+      const text = document.createTextNode(taskText)
+      const maxErrors = document.createTextNode(`${errors}`)
+      const timerTime = document.createTextNode(`${time}`)
 
+
+      confirmWindow.appendChild(name)
+      confirmWindow.appendChild(text)
+      confirmWindow.appendChild(maxErrors)
+      confirmWindow.appendChild(timerTime)
+
+      askBox.appendChild(confirmWindow)
     }
-    
-    // document.getElementById("stopTimer").addEventListener("click", () => {
-    //   timer(false)
-    // }) 
-  
+    taskConfirmWindow("Aboba","dsdsdsdsdsd",10,2222)
+
+    document.getElementById("stopTimer").addEventListener("click", () => {
+      userInputMessage("Sybmols amount")
+    }) 
+
+    const userInputMessage = (text,varie) => {
+      const askBox = document.querySelector(".confirmBox")
+      askBox.style.visibility = "visible"
+      askBox.style.opacity = "1"
+      const confirmWindow = document.createElement("div")
+      confirmWindow.classList.add("confirmWindow")
+      const closeButton = document.createElement("button")
+      const symbolsAmount = document.createElement("input")
+      const name = document.createTextNode(text)
+
+      closeButton.classList.add("btn")
+      closeButton.classList.add("btn-text")
+      closeButton.classList.add("color-white")
+      closeButton.innerHTML = "Close"
+      
+
+      closeButton.addEventListener ("click", (varie)=> {
+        askBox.style.opacity="0"
+        askBox.style.visibility="hidden"
+        while (askBox.firstChild) {
+          askBox.removeChild(askBox.lastChild);
+        }
+        return varie = symbolsAmount.value
+      })
+
+      confirmWindow.appendChild(name)
+      confirmWindow.appendChild(symbolsAmount)
+      confirmWindow.appendChild(closeButton)
+
+      askBox.appendChild(confirmWindow)
+      }
+
     const alertMessage = (title,message) => {
       const alertBox = document.querySelector(".alertBox")
-      alertBox.style.display="flex"
+      alertBox.style.visibility="visible"
+      alertBox.style.opacity="1"
       const window = document.createElement("div")
       const titleLine = document.createElement("div")
       const closeButton = document.createElement("button")
@@ -48,23 +100,30 @@ window.addEventListener("DOMContentLoaded", () => {
       const contentLine = document.createElement("div")
       const contentField = document.createTextNode(message);
       window.classList.add("alert")
+
       titleLine.setAttribute("id","titleLine")
       titleLine.classList.add("center-text")
       titleLine.classList.add("color-white")
+
       contentLine.setAttribute("id","contentLine")
       contentLine.classList.add("center-text")
       contentLine.classList.add("color-white")
+
       closeButton.classList.add("btn")
       closeButton.classList.add("btn-text")
       closeButton.classList.add("color-white")
       closeButton.innerHTML = "Close"
+
       titleLine.appendChild(titleText)
+
       contentLine.appendChild(contentField)
+
       window.appendChild(titleLine)
       window.appendChild(contentLine)
       window.appendChild(closeButton)
       closeButton.addEventListener ("click", ()=> {
-        alertBox.style.display="none"
+        alertBox.style.opacity="0"
+        alertBox.style.visibility="hidden"
         // clearInterval(lifetime)
         while (alertBox.firstChild) {
           alertBox.removeChild(alertBox.lastChild);
@@ -150,9 +209,10 @@ window.addEventListener("DOMContentLoaded", () => {
             maxErrors = data2
             b = data1;
             i = true;
-            console.log()
+            timerTime = data3
             screenReset()
-            timer(data3)
+            timerStart()
+          
           });
 
          })
@@ -177,25 +237,19 @@ window.addEventListener("DOMContentLoaded", () => {
         },60)
       }
   
-      // Navbar show function
-     const navbarShow = () => {
-      mainMenu.style.display = "flex"
-      setTimeout(()=> {
-        mainMenu.style.bottom = "3%"
-      },100)
-     }
 
      // Navbar hide function
      const navbarHide = () => {
       mainMenu.style.bottom = "100vh"
       setTimeout(()=> {
-        mainMenu.style.display = "none"
+        mainMenu.style.visibility = "hidden"
       },400)
      }
 
        // Navbar click to show listener
       navbar.addEventListener("click", ()=> {
-        navbarShow()
+        mainMenu.style.visibility = "visible"
+        mainMenu.style.bottom = "0px"
       })
 
       // Navbar hide button listener
@@ -221,32 +275,47 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // Tasks timer
     const timer = (time) => {  
-  
      //Пофиксить возможность двойного нажатия 
       var start = Date.now();
       time = time
-      timerField.innerHTML = `${time}s left`
-    const ad = setInterval(function() {
     var delta = Date.now() - start; 
     curr = Math.floor(delta / 1000)
     let timeLeft = time-curr
     timerField.innerHTML = `${timeLeft}s left`
-    if (timeLeft === 0) {
+    if (timeLeft <= 0) {
       i = false
       textField.innerHTML = "Time out"
-      clearInterval(ad)
+      return false
     }
-    } , 1000);
     }
-  
-
-
+    
+    
+    const timerStart = (stop = false) => {
+      if (timersRunning === 1 || stop == true) {//stop does not work
+        console.log(stop)
+        clearInterval(ad)
+        timersRunning = 0
+        return;
+      }
+    timersRunning++
+    var ad = setInterval(function() {
+      timerTime--
+      console.log(timerTime)
+      timer(timerTime)
+      if(timer(timerTime) === false) {
+        clearInterval(ad)
+        timersRunning = 0
+      }
+    }, 1000);
+    
+  }
 
     // Task 1
     task1.addEventListener("click", () => {
-      let max = prompt("Symbols count")
-      Number(max)
-      if (max){
+      let max = 0
+      userInputMessage("Sybmols amount",max)
+      if (max > 0) {
+        alertMessage(max)
       b = ""
       e = [];
       timer(false)
@@ -290,7 +359,6 @@ window.addEventListener("DOMContentLoaded", () => {
       timer(max*3)
     }
     });
-
 
 
 
