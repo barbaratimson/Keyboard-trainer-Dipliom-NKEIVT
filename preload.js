@@ -35,18 +35,20 @@ window.addEventListener("DOMContentLoaded", () => {
     audio1.volume = 0.2;
     errorCounterField.innerHTML = "Ошибки: " + errorCounter + " " + "Макс. ошибок: " + maxErrors;
 
-    const renderKeyboard = () => {
-      const keyboard = document.querySelector(".keyboardContainer")
-      const keyLayout = [
-        "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
-        "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
-        "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
-        "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
-        "space"
-    ];
-      keyLayout.forEach(key => {
-        lety
+    const renderKeyboard = (inputKey) => {
+      const keyboard = document.querySelectorAll(".keyboardKey")
+      if (inputKey == " ") {
+        inputKey = "_"
+      }
+      keyboard.forEach(key => {
+        if (key.innerHTML === inputKey || key.innerHTML == ' ') {
+          key.style.background = "white"
+          setTimeout(() => {
+            key.style.background = "#ffffff33"
+           }, 150);
+        }
       })
+      
     }
 
     showModal.addEventListener("click",()=>{
@@ -399,7 +401,6 @@ window.addEventListener("DOMContentLoaded", () => {
           key = e.key;
         if (key.length == 1) {
           ascii = key.charCodeAt(0);
-          console.log(ascii)
           if (ascii < 1200 && e.ctrlKey) {
             ascii = ascii & 0x1f;
           }
@@ -408,7 +409,8 @@ window.addEventListener("DOMContentLoaded", () => {
         if (typeof ascii == "number" && ascii < 1200 && ascii > 15) {
           // field1.style.display = "inline";
           // field1.innerHTML = String.fromCharCode(ascii);
-
+          console.log(`${String.fromCharCode(ascii)}`)
+          renderKeyboard(key)
           let key1 = String.fromCharCode(ascii);
             if (key1 === b.charAt(0) && b.length != 0) {
               b = b.substring(1, b.length);
