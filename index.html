@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta char="UTF-8">
-    <title>Keyboard Trainer</title>
+    <title>Клавиатурный тренажер</title>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <link rel="stylesheet" href="style.css">
     <link href="./node_modules/@fortawesome/fontawesome-free/css/fontawesome.css" rel="stylesheet">
@@ -15,7 +15,7 @@
 
     <nav id = "navbar">
         <div id = "nav-center" class = "nav-section">
-            <div class="color-white center-text" style="margin-right: 40px;">Keyboard Trainer</div>
+            <div class="color-white center-text" style="margin-right: 40px;">Клавиатурный тренажер</div>
             </div>
     </nav>
 
@@ -26,30 +26,30 @@
         <button id = "menuClose" style = "width: 100%;"  class="btn btn-text color-white" ><i class="fa-regular fa-chevron-up fa-rotate-180" style="font-size: 20px;"></i></button>
         <div class="line">
            <div class = "center-text color-white">
-            Scoreboad
+            Статистика
            </div>
         </div>
         <!-- Right Menu -->
     <div class="scoreBoard">
-           <div class="score btn-text color-white" id="score">Score:</div>
-           <div class="ae btn-text color-white" id = "ae">Average errors:</div>
-           <div class="ct btn-text color-white" id = "ct">Tasks:</div>
+           <div class="score btn-text color-white" id="score">Счет:</div>
+           <div class="ae btn-text color-white" id = "ae">Сред. ошибки:</div>
+           <div class="ct btn-text color-white" id = "ct">Заданий:</div>
     </div>
         <div class="line">
             <div class = "center-text color-white">
-                Tasks
+                Задания
             </div>
         </div>
         <!-- Left Menu -->
         <div class="taskLine">
-        <button class="btn btn-text color-white btn-border"  id="task1">Task 1</button>
-        <button class="btn btn-text color-white btn-border"  id="task2">Task 2</button>
+        <button class="btn btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+        <button class="btn btn-text color-white btn-border"  id="task2">Упражнение 2</button>
         </div>
         <div class = "tasksScanField"></div>
-        <button class="btn btn-text color-white btn-border" id="scanTasks">Scan tasks dir</button>
+        <button class="btn btn-text color-white btn-border" id="scanTasks">Обновить задания</button>
         <div class="line">
             <div class = "center-text color-white">
-                Custom tasks
+                Создать задание
             </div>
         </div> 
 
@@ -57,57 +57,96 @@
             <div class="fields">
             <div class="block">
                 <div class="center-text color-white">
-                Task name: 
+                Название задания: 
                 </div>
             <input id = "taskName" type="text" class="inputField" placeholder="Task name">
             </div>
             <div class="block">
                 <div class="center-text color-white">
-                Maximum errors: 
+                Количество ошибок: 
                 </div>
             <input id = "maximumErrors" type="number"  min="0" class="inputField" placeholder="Maximum errors(0 = OFF)">
             </div>
             <div class="block">
                 <div class="center-text color-white">
-                Time in seconds: 
+                Время в секундах: 
                 </div>
             <input id = "timerTime" type="number" min="1" class="inputField" placeholder="Time in seconds">
             </div>
             </div>
             <textarea id="taskTextField" cols="30" rows="10" placeholder="Task text" class="inputField"></textarea>
-            <button id = "customTaskSubmit" class="btn btn-text color-white">Create task</button>
+            <button id = "customTaskSubmit" class="btn btn-text color-white">Создать задание</button>
 
         </div>
 
         </div>
    
  <!-- Text field -->
- 
- <div class = "mainText">
-    <div id = "text-field">
-    <div id = "text"></div>
+
+    <div class = "playScreen">
+        <div class = "mainText">
+            <div id = "text-field">
+            <div id = "text"></div>
+            </div>
+            <div id = "text-field">
+                <div id = "text2"></div>
+                </div>
+            <div class="text-center color-white" id="errorCounterField"></div>
+            <div id="timerField" class="text-center color-white">Timer</div>
+         </div>
     </div>
-    <div class="text-center color-white" id="errorCounterField"></div>
-    <div id="timerField" class="text-center color-white">Timer</div>
- </div>
 
  <div>
  <button onclick="localStorage.clear()">Reset LS</button>
  <button id = "stopTimer">StopTimer</button>
+ <button id = "showModal">Show Modal</button>
 </div>
 
 <div class = "alertBox"></div>
-<div class = "confirmBox"></div>
+<div class = "confirmBox">
+    <div class = "taskConfirmWindow">
+        <div class = "sidesContainer">
+        <div class = "tcwSideLeft">
+            <div class = "block">
+            <div class="center-text color-white" id = "a">Текст задания</div>
+        </div>
+        <div class = "taskContainer">
+            <div class = "textBox">
+                <div class = "tcwText center-text color-white">
+                </div>
+            </div>
+            </div>
+            <button class = "btn tcwBtn btn-text color-white" id = "tcwStart">Начать</button>
+        </div>
+        <div class = "tcwSideRight">
+            <div class = "block">
+                <div class="center-text color-white" id = "a">Название задания</div>
+                <div class="tcwName center-text color-white" id = "b">fsdfsfsdf</div>
+            </div>
+                <div class = "block">
+                    <div class="center-text color-white" id = "a"><i class="fa-solid fa-heart"></i></div>
+                    <div class="tcwErrors center-text color-white" id = "b">fsdfsfsdf</div>
+                </div>
+                <div class = "block">
+                    <div class="center-text color-white" id = "a"><i class="fa-solid fa-stopwatch"></i></i></div>
+                    <div class="tcwTime center-text color-white" id = "b">fsdfsfsdf</div>
+                    </div>
+                    
+        </div>
+    </div>
+    </div>
+</div>
 <div class = "askBox"></div>
-
+<div class = "keyboardContainer"></div>
 </body>
 
 
+</div>
 
 
 
 <footer>
-    <div class="text-center color-white" id = "f1">Sergey Sokolov</div>
+    <div class="text-center color-white" id = "f1">Сергей Соколов</div>
  </footer>
     <script src="./preload.js"></script>
 </html>

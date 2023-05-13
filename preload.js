@@ -2,11 +2,11 @@ const fs = require('fs');
 window.addEventListener("DOMContentLoaded", () => {
     // let section
     let navbar = document.getElementById("navbar")
-
+    let showModal = document.getElementById("showModal")
     let mainMenu = document.querySelector(".mainMenu")
     let mainMenuClose = document.getElementById("menuClose")
     let scanTasks = document.getElementById("scanTasks")
-
+    const confirmBox = document.querySelector(".confirmBox")
     let timersRunning = 0
     let timerTime = 0
 
@@ -18,7 +18,9 @@ window.addEventListener("DOMContentLoaded", () => {
     let allErrors = 0
     let averageErrors1 = 0
     let textField = document.getElementById("text");
-    b = "Welcome!"
+    let textFiled2 = document.getElementById("text2")
+    let b = "Добро пожаловать!"
+    let c = ""
     let task1 = document.getElementById("task1");
     let averageErrors = document.getElementById("ae");
     let completedTasks1 = document.getElementById("ct")
@@ -31,34 +33,57 @@ window.addEventListener("DOMContentLoaded", () => {
     let maxErrors = 0
     audio.volume = 0.2;
     audio1.volume = 0.2;
-    errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
+    errorCounterField.innerHTML = "Ошибки: " + errorCounter + " " + "Макс. ошибок: " + maxErrors;
+
+    const renderKeyboard = () => {
+      const keyboard = document.querySelector(".keyboardContainer")
+      const keyLayout = [
+        "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "backspace",
+        "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+        "caps", "a", "s", "d", "f", "g", "h", "j", "k", "l", "enter",
+        "done", "z", "x", "c", "v", "b", "n", "m", ",", ".", "?",
+        "space"
+    ];
+      keyLayout.forEach(key => {
+        lety
+      })
+    }
+
+    showModal.addEventListener("click",()=>{
+      confirmBox.style.visibility = "visible"
+      confirmBox.style.opacity = "1"
+    })
 
     const taskConfirmWindow = (taskName,taskText,errors,time) => {
-      const askBox = document.querySelector(".askBox")
-      const confirmWindow = document.createElement("div")
-      confirmWindow.classList.add("confirmWindow")
-      const closeButton = document.createElement("button")
-      const name = document.createTextNode(taskName)
-      const text = document.createTextNode(taskText)
-      const maxErrors = document.createTextNode(`${errors}`)
-      const timerTime = document.createTextNode(`${time}`)
-
-
-      confirmWindow.appendChild(name)
-      confirmWindow.appendChild(text)
-      confirmWindow.appendChild(maxErrors)
-      confirmWindow.appendChild(timerTime)
-
-      askBox.appendChild(confirmWindow)
+      let tcwText = document.querySelector(".tcwText")
+      let tcwName = document.querySelector(".tcwName")
+      let tcwErr = document.querySelector(".tcwErrors")
+      let tcwTime = document.querySelector(".tcwTime")
+      let start = document.getElementById("tcwStart")
+      navbarHide()
+      tcwText.innerHTML=taskText
+      tcwName.innerHTML=taskName
+      tcwErr.innerHTML = errors
+      tcwTime.innerHTML = `${time}s`
+      confirmBox.style.visibility = "visible"
+      confirmBox.style.opacity = "1"
+      start.addEventListener("click",()=>{
+        b = taskText
+        maxErrors = errors
+        timerTime = time
+        i = true
+        screenReset()
+        timerStart()
+        confirmBox.style.visibility = "hidden"
+        confirmBox.style.opacity = "0"
+      })
     }
-    taskConfirmWindow("Aboba","dsdsdsdsdsd",10,2222)
 
     document.getElementById("stopTimer").addEventListener("click", () => {
       userInputMessage("Sybmols amount")
     }) 
 
     const userInputMessage = (text,varie) => {
-      const askBox = document.querySelector(".confirmBox")
       askBox.style.visibility = "visible"
       askBox.style.opacity = "1"
       const confirmWindow = document.createElement("div")
@@ -162,16 +187,15 @@ window.addEventListener("DOMContentLoaded", () => {
       let timerTime = document.getElementById("timerTime").value
       if (taskName && taskTextField && maximumErrors && timerTime) {
       let fileData = {taskText:taskTextField,maxErrors:maximumErrors,timerTime:timerTime}
-      fs.writeFile(`./User/customTasks/${taskName}.txt`, `${JSON.stringify(fileData)}`, function(err) {
+      fs.writeFile(__dirname + `/User/customTasks/${taskName}.txt`, `${JSON.stringify(fileData)}`, function(err) {
         if(err) {
             return alert(err);
         }
-        alertMessage("Message:",`Task ${taskName} created!`)
+        alertMessage("Сообщение:",`Задание ${taskName} создано!`)
     }); 
   } else {
-    alertMessage("Error!",`Empty Fields`)
+    alertMessage("Ошибка!",`Пустые поля`)
   }
-
     })
 
     
@@ -189,7 +213,7 @@ window.addEventListener("DOMContentLoaded", () => {
       while (scanField.firstChild) {
         scanField.removeChild(scanField.lastChild);
       }
-      fs.readdir("./user/customTasks", (err, files) => {
+      fs.readdir(__dirname + "/User/customTasks", (err, files) => {
         files.forEach(file => {
         if (file.substring(file.length-3) == "txt"){
          const newDiv = document.createElement("button")
@@ -198,7 +222,7 @@ window.addEventListener("DOMContentLoaded", () => {
          newDiv.classList.add("btn-text")
          newDiv.classList.add("color-white")
          newDiv.addEventListener("click",() => {
-          fs.readFile(`./user/customTasks/${file}`, 'utf8', function(err, content) {
+          fs.readFile(__dirname + `/user/customTasks/${file}`, 'utf8', function(err, content) {
             data = JSON.parse(content);
             data1 = data.taskText;
             data2 = data.maxErrors;
@@ -206,13 +230,7 @@ window.addEventListener("DOMContentLoaded", () => {
             data1 = JSON.stringify(data1);
             f = data1.length;
             data1 = data1.substring(1, f - 1);
-            maxErrors = data2
-            b = data1;
-            i = true;
-            timerTime = data3
-            screenReset()
-            timerStart()
-          
+            taskConfirmWindow(`${file.replace(".txt","")}`,data1,data2,data3)
           });
 
          })
@@ -221,7 +239,7 @@ window.addEventListener("DOMContentLoaded", () => {
           document.querySelector(".tasksScanField").appendChild(newDiv)
         }
         else {
-          alertMessage("Error!",`Wrong format on: ${file}`)
+          alertMessage("Ошибка!",`Неправильный формат файла: ${file}`)
         }
         });
         
@@ -263,47 +281,51 @@ window.addEventListener("DOMContentLoaded", () => {
 
     const screenReset = () => {
       errorCounter = 0
+      c = ""
       textField.innerHTML = `${b}`;
-      score1.innerHTML = `Score: ${score}`
-      completedTasks1.innerHTML = `Tasks: ${completedTasks}`
-      averageErrors.innerHTML = `Average errors: ${averageErrors1}`
-      errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
+      textFiled2.innerHTML = `${c}`
+      score1.innerHTML = `Счет: ${score}`
+      completedTasks1.innerHTML = `Заданий: ${completedTasks}`
+      averageErrors.innerHTML = `Сред. ошибки: ${averageErrors1}`
+      errorCounterField.innerHTML = "Ошибки: " + errorCounter + " " + "Макс. ошибок: " + maxErrors;
       mainMenu.style.bottom = "100vh"
     }
 
 
 
     // Tasks timer
-    const timer = (time) => {  
-     //Пофиксить возможность двойного нажатия 
-      var start = Date.now();
-      time = time
-    var delta = Date.now() - start; 
-    curr = Math.floor(delta / 1000)
-    let timeLeft = time-curr
-    timerField.innerHTML = `${timeLeft}s left`
-    if (timeLeft <= 0) {
-      i = false
-      textField.innerHTML = "Time out"
-      return false
-    }
-    }
+    // const timer = (time) => {  
+    //  //Пофиксить возможность двойного нажатия 
+    //   var start = Date.now();
+    //   time = time
+    // var delta = Date.now() - start; 
+    // curr = Math.floor(delta / 1000)
+    // let timeLeft = time-curr
+    // timerField.innerHTML = `${timeLeft} сек. осталось`
+    // if (timeLeft <= 0) {
+    //   i = false
+    //   textField.innerHTML = "Время вышло"
+    //   return false
+    // }
+    // }
     
     
     const timerStart = (stop = false) => {
       if (timersRunning === 1 || stop == true) {//stop does not work
-        console.log(stop)
+        console.log(stop,"sdsd")
         clearInterval(ad)
         timersRunning = 0
-        return;
       }
     timersRunning++
     var ad = setInterval(function() {
       timerTime--
+      timerField.innerHTML = `${timerTime} сек. осталось`
       console.log(timerTime)
-      timer(timerTime)
-      if(timer(timerTime) === false) {
+      console.log(timersRunning)
+      if(timerTime === 0) {
+        i = false
         clearInterval(ad)
+        textField.innerHTML = "Время вышло"
         timersRunning = 0
       }
     }, 1000);
@@ -374,30 +396,33 @@ window.addEventListener("DOMContentLoaded", () => {
           key = e.key;
         if (key.length == 1) {
           ascii = key.charCodeAt(0);
-          if (ascii < 128 && e.ctrlKey) {
+          console.log(ascii)
+          if (ascii < 1200 && e.ctrlKey) {
             ascii = ascii & 0x1f;
           }
         }
   
-        if (typeof ascii == "number" && ascii < 128 && ascii > 15) {
+        if (typeof ascii == "number" && ascii < 1200 && ascii > 15) {
           // field1.style.display = "inline";
           // field1.innerHTML = String.fromCharCode(ascii);
 
           let key1 = String.fromCharCode(ascii);
             if (key1 === b.charAt(0) && b.length != 0) {
               b = b.substring(1, b.length);
+              c = c + key1
               textField.innerHTML = `${b}`;
+              textFiled2.innerHTML = c
               score++
-              score1.innerHTML = `Score: ${score}`
+              score1.innerHTML = `Счет: ${score}`
               audio.play();
               if (b.length == 0) {
                 i = false;
-                textField.innerHTML = "Congratulations";
+                textField.innerHTML = "Победа!";
                 score = score + 100
                 completedTasks++
                 averageErrors1 = Math.floor(allErrors/completedTasks)
-                completedTasks1.innerHTML = `Tasks: ${completedTasks}`
-                score1.innerHTML = `Score: ${score}`
+                completedTasks1.innerHTML = `Заданий: ${completedTasks}`
+                score1.innerHTML = `Счет: ${score}`
                 userData(1)
               }
             } else {
@@ -406,9 +431,9 @@ window.addEventListener("DOMContentLoaded", () => {
               errorCounter++;
               allErrors++
               averageErrors1 = Math.floor(allErrors/completedTasks)
-              averageErrors.innerHTML = `Average errors: ${averageErrors1}`
+              averageErrors.innerHTML = `Сред. ошибки: ${averageErrors1}`
               
-              errorCounterField.innerHTML = "Errors: " + errorCounter + " " + "Max errors: " + maxErrors;
+              errorCounterField.innerHTML = "Ошибки: " + errorCounter + " " + "Макс. ошибок: " + maxErrors;
             }
           
   
@@ -417,7 +442,7 @@ window.addEventListener("DOMContentLoaded", () => {
           // }, 400);
         }
       } else {
-        textField.innerHTML = "Max Errors"
+        textField.innerHTML = "Максимальный лимит ошибок"
       }
     } 
     });
