@@ -126,8 +126,20 @@
   align-items: center;
 }
 
+#tcwClose {
+  position: relative;
+  left:260px;
+  background-color: transparent;
+  border: 0;
+  top: 5px;
+  color: white;
+}
 
 
+#tcwClose:hover {
+  transition: all .4s;
+  scale: 1.5;
+}
 
 
 .line {

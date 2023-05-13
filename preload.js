@@ -9,7 +9,7 @@ window.addEventListener("DOMContentLoaded", () => {
     const confirmBox = document.querySelector(".confirmBox")
     let timersRunning = 0
     let timerTime = 0
-
+    let tcwClose = document.getElementById("tcwClose")
     let customTaskSubmit = document.getElementById("customTaskSubmit")
     let i = false;
     let errorCounter = 0;
@@ -275,7 +275,10 @@ window.addEventListener("DOMContentLoaded", () => {
         navbarHide()
       })
 
-
+      tcwClose.addEventListener("click",()=>{
+        confirmBox.style.visibility = "hidden"
+        confirmBox.style.opacity = "0"
+      })
 
     // Resetting screen
 
@@ -381,7 +384,7 @@ window.addEventListener("DOMContentLoaded", () => {
       timer(max*3)
     }
     });
-
+    
 
 
     // // Основной цикл
