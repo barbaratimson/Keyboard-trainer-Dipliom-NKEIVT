@@ -25,6 +25,7 @@ window.addEventListener("DOMContentLoaded", () => {
     let averageErrors = document.getElementById("ae");
     let completedTasks1 = document.getElementById("ct")
     let errorCounterField = document.getElementById("errorCounterField");
+    let errorCounterField2 = document.getElementById("errorCounterField2");
     let timerField = document.getElementById("timerField");
     let task2 = document.getElementById("task2");
     let score1 = document.getElementById("score");
@@ -33,16 +34,23 @@ window.addEventListener("DOMContentLoaded", () => {
     let maxErrors = 0
     audio.volume = 0.2;
     audio1.volume = 0.2;
-    errorCounterField.innerHTML = "Ошибки: " + errorCounter + " " + "Макс. ошибок: " + maxErrors;
-
-    const renderKeyboard = (inputKey) => {
+    errorCounterField.innerHTML = "Ошибки: " + errorCounter
+    errorCounterField2.innerHTML = "Макс. ошибок: " + maxErrors;
+    const renderKeyboard = (inputKey,status) => {
       const keyboard = document.querySelectorAll(".keyboardKey")
-      if (inputKey == " ") {
-        inputKey = "_"
-      }
+
       keyboard.forEach(key => {
-        if (key.innerHTML === inputKey || key.innerHTML == ' ') {
-          key.style.background = "white"
+        let a = key.getAttribute("key1")
+        let b = key.getAttribute("key2")
+        let c = key.getAttribute("key3")
+        let d = key.getAttribute("key4")
+        if (a === inputKey || b === inputKey || c === inputKey || d === inputKey || key.innerHTML === ' ') {
+          if (status === true){
+            key.style.background = "green"
+          }
+          else {
+            key.style.background = "red"
+          }
           setTimeout(() => {
             key.style.background = "#ffffff33"
            }, 150);
@@ -51,6 +59,12 @@ window.addEventListener("DOMContentLoaded", () => {
       
     }
 
+    // if (key.innerHTML === inputKey || key.innerHTML == ' ') {
+    //   key.style.background = "white"
+    //   setTimeout(() => {
+    //     key.style.background = "#ffffff33"
+    //    }, 150);
+    // }
     showModal.addEventListener("click",()=>{
       confirmBox.style.visibility = "visible"
       confirmBox.style.opacity = "1"
@@ -292,7 +306,8 @@ window.addEventListener("DOMContentLoaded", () => {
       score1.innerHTML = `Счет: ${score}`
       completedTasks1.innerHTML = `Заданий: ${completedTasks}`
       averageErrors.innerHTML = `Сред. ошибки: ${averageErrors1}`
-      errorCounterField.innerHTML = "Ошибки: " + errorCounter + " " + "Макс. ошибок: " + maxErrors;
+      errorCounterField.innerHTML = errorCounter
+      errorCounterField2.innerHTML =  maxErrors;
       mainMenu.style.bottom = "100vh"
     }
 
@@ -324,7 +339,7 @@ window.addEventListener("DOMContentLoaded", () => {
     timersRunning++
     var ad = setInterval(function() {
       timerTime--
-      timerField.innerHTML = `${timerTime} сек. осталось`
+      timerField.innerHTML = `${timerTime} сек.`
       console.log(timerTime)
       console.log(timersRunning)
       if(timerTime === 0) {
@@ -338,6 +353,20 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
     // Task 1
+    
+    const randomAO = (amount) => {
+      let e = []
+      for (let i = 0; i < amount; i++) {
+        a = Math.round(Math.random());
+        if (a == 1) {
+          e.push("a");
+        } else {
+          e.push("o");
+        }
+      }
+      e = e.join("");
+      return e
+    }
     task1.addEventListener("click", () => {
       let max = 0
       userInputMessage("Sybmols amount",max)
@@ -409,10 +438,9 @@ window.addEventListener("DOMContentLoaded", () => {
         if (typeof ascii == "number" && ascii < 1200 && ascii > 15) {
           // field1.style.display = "inline";
           // field1.innerHTML = String.fromCharCode(ascii);
-          console.log(`${String.fromCharCode(ascii)}`)
-          renderKeyboard(key)
           let key1 = String.fromCharCode(ascii);
             if (key1 === b.charAt(0) && b.length != 0) {
+              renderKeyboard(key,true)
               b = b.substring(1, b.length);
               c = c + key1
               textField.innerHTML = `${b}`;
@@ -432,13 +460,15 @@ window.addEventListener("DOMContentLoaded", () => {
               }
             } else {
               // xmarkAnimation();
+              renderKeyboard(key,false)
               audio1.play();
               errorCounter++;
               allErrors++
               averageErrors1 = Math.floor(allErrors/completedTasks)
               averageErrors.innerHTML = `Сред. ошибки: ${averageErrors1}`
               
-              errorCounterField.innerHTML = "Ошибки: " + errorCounter + " " + "Макс. ошибок: " + maxErrors;
+              errorCounterField.innerHTML = errorCounter
+              errorCounterField2.innerHTML = maxErrors;
             }
           
   

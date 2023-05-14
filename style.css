@@ -81,6 +81,8 @@
   height: 62px;
   justify-content: center;
   align-items: center;
+  border-top: 1px solid var(--border-color);
+  border-right: 0;
 }
 
 .sidesContainer > .tcwSideRight {
@@ -314,10 +316,28 @@
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%) }
+
+  .statsLine {
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    width: 500px;
+    top:40px;
+  }
+  .statsLine > .slBlock {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    border-right: 1px solid var(--border-color);
+    border-left: 1px solid var(--border-color);
+    gap: 5px;
+  }
 
 #text-field {
   width: 1000px;
@@ -467,7 +487,7 @@ nav > .nav-section {
   display: flex;
   flex-direction: column;
   position: relative;
-  top: 580px;
+  top: 550px;
 }
 
 .keyLine {
@@ -490,6 +510,8 @@ nav > .nav-section {
     border: none;
     background: #ffffff33;
     color: #ffffff;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 19px;
     font-size: 1.05rem;
     outline: none;
     display: inline-flex;
