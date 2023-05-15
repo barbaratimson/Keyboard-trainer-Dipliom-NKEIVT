@@ -19,17 +19,173 @@
 .mainMenu{
   display:flex;
   flex-direction: column;
-  gap: 20px;
-  height: 100vh;
-  width: 100vw;
   position: absolute;
+  overflow: hidden;
+  width: 70vw;
+  height: 90vh;
   background-color: var(--background-color,);
-  bottom: 100vh;
-  transition: bottom .4s;
   z-index: 1;
-  border: 2px solid var(--border-color);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  transition: all .4s;
 }
 
+
+.topLine{
+  display: flex;
+  flex-direction: row;
+}
+
+.topLine > .title {
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 50px;
+  bottom: 30px;
+  user-select: none;
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.topLine > .info {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 15%;
+  height: 100%;
+  left: 20px;
+  z-index: 0;
+  opacity: 0.1;
+}
+
+.info > div {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  gap: 10px;
+  flex-grow: 1;
+  height: 182px;
+  align-items: center;
+}
+
+.mmWindowClose{
+  display: flex;
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.mmSides{
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.mmSideLeft {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 15%;
+  height: 100%;
+}
+
+.mmSideLeft div:nth-child(1) {
+  border-top: 0;
+}
+
+.mmLeftSideBlock{
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
+  border-right: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+}
+
+
+.mmLeftSideBlock > button{
+  display: flex;
+  position: relative;
+  background-color: transparent;
+  border: 0;
+  color: white;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.mmLeftSideBlock:hover > button{
+  font-size: 40px;
+  transition: all .2s;
+}
+
+.mmLeftSideBlock:not(:hover) > button{
+  transition: all .5s;
+  font-size: 15px;
+}
+
+.mmWindowClose:hover {
+  transition: all .4s;
+  scale: 1.5;
+}
+
+.mmSideRight{
+  width: 100%;
+  height: 100%;
+}
+
+.mmRightContainer{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transition: all .4s;
+  scale: 0;
+  visibility: hidden;
+}
+.mmRightContainer2{
+  position: absolute;
+  width: 87%;
+  margin: 0;
+}
+.mmSideRight > #tasksList {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.mmRightContainer > .tasksField , .tasksScanField {
+  display: flex;
+  flex-direction:column;
+  width: 100%;
+  height: 400px;
+  overflow-x: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  visibility: hidden;
+  scale: 0;
+  transition: all .4s;
+}
+
+
+.mmline {
+  display: flex;
+  position: relative;
+  visibility: visible;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px !important;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
 .scoreBoard{
   display: flex;
 }
@@ -38,7 +194,7 @@
 .endTaskWindow {
   display: flex;
   flex-direction: column;
-  width: 500px;
+  width: 510px;
   height: 600px;
   background-color: var(--background-color);
   border-radius: 20px;
@@ -60,19 +216,22 @@
 
 .endTaskWindow > .etTitle {
   display: flex;
-  top: 10px;
+  top: 5px;
+  bottom: 5px;
   position: relative;
   align-items: center;
   justify-content: center;
-  height: 20px;
+  height: 40px;
   width: 80%;
   border-bottom: 1px solid var(--border-color);
 }
 .etTitle > div {
   position: absolute;
-  bottom: 5px;
+  bottom: 10px;
 }
-
+.tf2 {
+  transition: all .4s;
+}
 .endTaskWindow > .bottomContainer {
   position: relative;
   display: flex;
@@ -110,11 +269,16 @@
   border-right: 1px solid var(--border-color);
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 #userInputText {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  padding-left: 15px;
+  max-height: 450px;
+  padding-left: 20px;
   padding-top: 10px;
 }
 #userInputText > div {
@@ -252,7 +416,7 @@
   border: 1px solid var(--border-color) !important
 }
 
-.alertBox, .confirmBox, .askBox, .endTaskBox {
+.alertBox, .confirmBox, .askBox, .endTaskBox,.mainMenuContainer {
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -309,19 +473,6 @@
   border-top: 1px solid var(--border-color);
 }
 
-.tasksScanField {
-  display: flex;
-  flex-direction:column;
-  width: 100%;
-  height: 400px;
-  background-color: black;
-  border-top: 2px solid white;
-  border-bottom: 2px solid white;
-  overflow-x: auto;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
 
 
 .scoreBoard{
@@ -364,16 +515,6 @@
   height: 30px;
 }
 
-
-#menuClose:hover > i {
-  transition: all .1s;
-  rotate: 180deg;
-}
-
-#menuClose:not(:hover) > i {
-  transition: all .3s;
-  rotate: 0deg;
-}
 .btn {
   border: 0;
   border-radius: 0;
@@ -419,7 +560,7 @@
     flex-direction: row;
     align-items: center;
     width: 500px;
-    top:50px;
+    top:40px;
   }
   .statsLine > .slBlock {
     display: flex;
@@ -584,7 +725,7 @@ nav > .nav-section {
   display: flex;
   flex-direction: column;
   position: relative;
-  top: 550px;
+  bottom: 250px;
 }
 
 .keyLine {

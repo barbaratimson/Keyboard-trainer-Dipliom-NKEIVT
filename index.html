@@ -15,14 +15,73 @@
 
     <nav id = "navbar">
         <div id = "nav-center" class = "nav-section">
-            <div class="color-white center-text" style="margin-right: 40px;">Клавиатурный тренажер</div>
+            <div class="color-white center-text" >Клавиатурный тренажер</div>
             </div>
     </nav>
 
 
 
 <body>
+    <div class = "mainMenuContainer">
     <div class = "mainMenu">
+    <div class = "mmSides">
+        <div class="mmSideLeft">
+            <div class = "mmLeftSideBlock">
+                <button title = "Статистика" id = "mmShowStatistics"><i class="fa-solid fa-chart-simple"></i></button>
+            </div>
+            <div class = "mmLeftSideBlock" title = "Список заданий">
+                <button id = "mmShowTasksList"><i class="fa-solid fa-list"></i></button>
+            </div>
+            <div class = "mmLeftSideBlock" title = "Создание заданий">
+                <button><i class="fa-solid fa-list-check"></i></button>
+            </div>
+            <div class = "mmLeftSideBlock" title = "Информация">
+                <button><i class="fa-solid fa-circle-info"></i></button>
+            </div>
+            <div class = "mmLeftSideBlock" title = "Настройки">
+                <button><i class="fa-solid fa-gear"></i></button>
+            </div>
+        </div>
+        <div class="mmSideRight">
+            <div class = "mmRightContainer" id="topLine" style="visibility: visible !important; scale: 1 !important;">
+                <div class="topLine">
+                    <div class = "info">
+                    <div class="title color-white center-text"><i class="fa-solid fa-arrow-right fa-rotate-180"></i>Статистика</div>
+                    <div class="title color-white center-text"><i class="fa-solid fa-arrow-right fa-rotate-180"></i>Список заданий</div>
+                    <div class="title color-white center-text"><i class="fa-solid fa-arrow-right fa-rotate-180"></i>Создание заданий</div>
+                    <div class="title color-white center-text"><i class="fa-solid fa-arrow-right fa-rotate-180"></i>Информация</div>
+                    <div class="title color-white center-text"><i class="fa-solid fa-arrow-right fa-rotate-180"></i>Настройки</div>
+                    </div>
+                    <div class="title color-white center-text">Главное меню</div>
+                    </div>
+                </div>
+
+            <div class = "mmRightContainer"  id = "tasksList">
+                <div class = "mmline color-white center-text" id = "premadeTasks">
+                    Встроенные задания
+                </div>
+                <div class = "tasksField">
+                    <button class="btn btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btn-text color-white btn-border"  id="task2">Упражнение 2</button>
+                </div>
+                <div class = "mmline color-white center-text">
+                    Созданные задания
+                </div>
+                <div class = "tasksScanField"></div>
+
+        </div>
+        <div class = "mmRightContainer mmRightContainer2"  id = "mmStatistics" style="bottom: 0px;">
+            <div class="scoreBoard">
+                <div class="score btn-text color-white" id="score">Счет:</div>
+                <div class="ae btn-text color-white" id = "ae">Сред. ошибки:</div>
+                <div class="ct btn-text color-white" id = "ct">Заданий:</div>
+         </div>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+    <div class = "mainMenu2" style="visibility: hidden;">
         <button id = "menuClose" style = "width: 100%;"  class="btn btn-text color-white" ><i class="fa-regular fa-chevron-up fa-rotate-180" style="font-size: 20px;"></i></button>
         <div class="line">
            <div class = "center-text color-white">
@@ -30,11 +89,6 @@
            </div>
         </div>
         <!-- Right Menu -->
-    <div class="scoreBoard">
-           <div class="score btn-text color-white" id="score">Счет:</div>
-           <div class="ae btn-text color-white" id = "ae">Сред. ошибки:</div>
-           <div class="ct btn-text color-white" id = "ct">Заданий:</div>
-    </div>
         <div class="line">
             <div class = "center-text color-white">
                 Задания
@@ -88,7 +142,7 @@
             <div id = "text-field">
             <div id = "text"></div>
             </div>
-            <div id = "text-field">
+            <div class = "tf2" id = "text-field">
                 <div id = "text2">
                     
                 </div>
@@ -110,7 +164,7 @@
          </div>
     </div>
 
- <div>
+ <div style="display: none;">
  <button onclick="localStorage.clear()">Reset LS</button>
  <button id = "stopTimer">StopTimer</button>
  <button id = "showModal">Show Modal</button>
@@ -217,7 +271,7 @@
 <button class ="windowClose" id = "etClose" ><i class="fa-solid fa-xmark" style="font-size: 20px;"></i></button>
 <div class = "endTaskWindow">
     <div class = "etTitle">
-        <div class = "center-text color-white" style="font-size: 15px;">
+        <div class = "center-text color-white">
             Результаты
         </div>
     </div>
