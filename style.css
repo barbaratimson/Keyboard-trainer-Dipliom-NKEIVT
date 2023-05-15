@@ -35,6 +35,98 @@
 }
 
 
+.endTaskWindow {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 600px;
+  background-color: var(--background-color);
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  align-items: center;
+}
+
+.endTaskWindow > .topContainer{
+  flex-grow: 1;
+  width: 450px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+  border-left: 1px solid var(--border-color);
+  border-right: 1px solid var(--border-color);
+}
+
+.endTaskWindow > .etTitle {
+  display: flex;
+  top: 10px;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  width: 80%;
+  border-bottom: 1px solid var(--border-color);
+}
+.etTitle > div {
+  position: absolute;
+  bottom: 5px;
+}
+
+.endTaskWindow > .bottomContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  bottom: 15px;
+  gap: 40px;
+}
+
+.bottomContainer > .etblock {
+  display: flex;
+  width: 105px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  border-top: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+}
+.etblock > div{
+  flex-grow: 0.5;
+  display: flex;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.etblock > i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25px;
+  width: 10px;
+  flex-grow: 0.5;
+  border-right: 1px solid var(--border-color);
+}
+
+#userInputText {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding-left: 15px;
+  padding-top: 10px;
+}
+#userInputText > div {
+  display:flex;
+  user-select: none;
+  white-space: pre;
+  position: relative;
+  text-align: start;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 20px;
+}
+
 .taskConfirmWindow{
   width: 500px;
   height: 600px;
@@ -128,7 +220,7 @@
   align-items: center;
 }
 
-#tcwClose {
+.windowClose {
   position: relative;
   left:265px;
   background-color: transparent;
@@ -138,7 +230,7 @@
 }
 
 
-#tcwClose:hover {
+.windowClose:hover {
   transition: all .4s;
   scale: 1.5;
 }
@@ -160,7 +252,7 @@
   border: 1px solid var(--border-color) !important
 }
 
-.alertBox, .confirmBox, .askBox {
+.alertBox, .confirmBox, .askBox, .endTaskBox {
   opacity: 0;
   visibility: hidden;
   position: absolute;
@@ -327,7 +419,7 @@
     flex-direction: row;
     align-items: center;
     width: 500px;
-    top:40px;
+    top:50px;
   }
   .statsLine > .slBlock {
     display: flex;
@@ -361,18 +453,23 @@
 }
 
 #text-field > #text2 {
-  display: inline;
+  display: flex;
+  flex-direction: row;
+
+
+}
+
+#text2 > div {
+   display: inline;
   user-select: none;
   white-space: pre;
   position: relative;
   text-align: start;
+    font-family: 'Roboto Mono', monospace;
+  font-size: 30px;
   left: 10px;
   top: 10px;
-  font-family: 'Roboto Mono', monospace;
-  font-size: 30px;
-  color: white;
 }
-
 
 body {
  background-color: var(--background-color);
@@ -511,9 +608,9 @@ nav > .nav-section {
     background: #ffffff33;
     color: #ffffff;
     font-family: 'Roboto Mono', monospace;
-    font-size: 19px;
     font-size: 1.05rem;
     outline: none;
+    user-select: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;

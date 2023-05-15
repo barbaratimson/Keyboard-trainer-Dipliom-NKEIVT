@@ -7,9 +7,11 @@ window.addEventListener("DOMContentLoaded", () => {
     let mainMenuClose = document.getElementById("menuClose")
     let scanTasks = document.getElementById("scanTasks")
     const confirmBox = document.querySelector(".confirmBox")
+    const endTaskBox = document.querySelector(".endTaskBox")
     let timersRunning = 0
     let timerTime = 0
     let tcwClose = document.getElementById("tcwClose")
+    let etClose = document.getElementById("etClose")
     let customTaskSubmit = document.getElementById("customTaskSubmit")
     let i = false;
     let errorCounter = 0;
@@ -21,6 +23,7 @@ window.addEventListener("DOMContentLoaded", () => {
     let textFiled2 = document.getElementById("text2")
     let b = "Добро пожаловать!"
     let c = ""
+    let fullTask
     let task1 = document.getElementById("task1");
     let averageErrors = document.getElementById("ae");
     let completedTasks1 = document.getElementById("ct")
@@ -29,9 +32,12 @@ window.addEventListener("DOMContentLoaded", () => {
     let timerField = document.getElementById("timerField");
     let task2 = document.getElementById("task2");
     let score1 = document.getElementById("score");
+    let userInputEnd = document.getElementById("userInputText")
     let audio1 = new Audio("sound.mp3");
     let audio = new Audio("sound2.mp3");
     let maxErrors = 0
+    let userInput = []
+    let ctUserInput = []
     audio.volume = 0.2;
     audio1.volume = 0.2;
     errorCounterField.innerHTML = "Ошибки: " + errorCounter
@@ -66,9 +72,91 @@ window.addEventListener("DOMContentLoaded", () => {
     //    }, 150);
     // }
     showModal.addEventListener("click",()=>{
-      confirmBox.style.visibility = "visible"
-      confirmBox.style.opacity = "1"
+      endTaskBox.style.visibility = "visible"
+      endTaskBox.style.opacity = "1"
     })
+    
+    const clearUserText = () => {
+      while (textFiled2.firstChild) {
+        textFiled2.removeChild(textFiled2.lastChild);
+      }
+    }
+
+    const clearEndText = () => {
+      while (userInputEnd.firstChild) {
+        userInputEnd.removeChild(userInputEnd.lastChild);
+      }
+    }
+
+    const renderUserText = () => {
+      clearUserText()
+      userInput.forEach(e => {
+        const div = document.createElement("div")
+        const symbol = document.createTextNode(e.key)
+        if (e.key === " " && e.status === true) {
+          clearUserText()
+          ctUserInput.push(userInput)
+          userInput = []
+        } else if (e.key === " " && e.status === false) {
+        } else {
+        if(e.status === false){
+            div.style.color = "red"
+        } else {
+          div.style.color = "lightgreen"
+        }
+        div.appendChild(symbol)
+        textFiled2.appendChild(div)
+      }
+      })
+    }
+
+    const renderTaskEnd = (errors,time,taskText = "") => {
+      let a = []
+      let etErrors = document.querySelector(".etErrors")
+      let etTime = document.querySelector(".etTime")
+      let etAccuracy = document.querySelector(".etAccuracy")
+
+      ctUserInput.forEach(e => {
+        e.forEach(e => {
+          const div = document.createElement("div")
+          const symbol = document.createTextNode(e.key)       
+          if(e.status === false){
+            div.style.color = "red"
+        } else {
+          div.style.color = "lightgreen"
+        }
+          div.appendChild(symbol)
+          a.push(div)
+        })
+      })
+      const perChunk = 35 // items per chunk    
+      const inputArray = a
+        const result = inputArray.reduce((resultArray, item, index) => { 
+          const chunkIndex = Math.floor(index/perChunk)
+          if(!resultArray[chunkIndex]) {
+            resultArray[chunkIndex] = [] // start a new chunk
+          }
+          resultArray[chunkIndex].push(item)
+          return resultArray
+        }, [])
+      let count = 1
+      result.forEach(e => {
+        const divLine = document.createElement("div")
+        divLine.classList.add("uiTextLine")
+        divLine.setAttribute("id",count)
+        e.forEach(e=> {
+          divLine.appendChild(e)
+        })
+        count++
+        userInputEnd.appendChild(divLine)
+      })
+      etErrors.innerHTML = errors
+      etTime.innerHTML = time
+      etAccuracy.innerHTML = `${100 - Math.floor(100 * (errors/taskText.length))}%`
+      console.log(taskText.length,errors,taskText.length%errors)
+      endTaskBox.style.visibility = "visible"
+      endTaskBox.style.opacity = "1"
+    }
 
     const taskConfirmWindow = (taskName,taskText,errors,time) => {
       let tcwText = document.querySelector(".tcwText")
@@ -246,6 +334,7 @@ window.addEventListener("DOMContentLoaded", () => {
             data1 = JSON.stringify(data1);
             f = data1.length;
             data1 = data1.substring(1, f - 1);
+            fullTask = data1
             taskConfirmWindow(`${file.replace(".txt","")}`,data1,data2,data3)
           });
 
@@ -295,6 +384,10 @@ window.addEventListener("DOMContentLoaded", () => {
         confirmBox.style.visibility = "hidden"
         confirmBox.style.opacity = "0"
       })
+      etClose.addEventListener("click",()=>{
+        endTaskBox.style.visibility = "hidden"
+        endTaskBox.style.opacity = "0"
+      })
 
     // Resetting screen
 
@@ -303,6 +396,10 @@ window.addEventListener("DOMContentLoaded", () => {
       c = ""
       textField.innerHTML = `${b}`;
       textFiled2.innerHTML = `${c}`
+      clearUserText()
+      userInput = []
+      ctUserInput = []
+      clearEndText()
       score1.innerHTML = `Счет: ${score}`
       completedTasks1.innerHTML = `Заданий: ${completedTasks}`
       averageErrors.innerHTML = `Сред. ошибки: ${averageErrors1}`
@@ -340,8 +437,6 @@ window.addEventListener("DOMContentLoaded", () => {
     var ad = setInterval(function() {
       timerTime--
       timerField.innerHTML = `${timerTime} сек.`
-      console.log(timerTime)
-      console.log(timersRunning)
       if(timerTime === 0) {
         i = false
         clearInterval(ad)
@@ -434,17 +529,18 @@ window.addEventListener("DOMContentLoaded", () => {
             ascii = ascii & 0x1f;
           }
         }
-  
         if (typeof ascii == "number" && ascii < 1200 && ascii > 15) {
           // field1.style.display = "inline";
           // field1.innerHTML = String.fromCharCode(ascii);
           let key1 = String.fromCharCode(ascii);
             if (key1 === b.charAt(0) && b.length != 0) {
+              userInput.push({key:key,status:true})
               renderKeyboard(key,true)
+              renderUserText()
               b = b.substring(1, b.length);
               c = c + key1
               textField.innerHTML = `${b}`;
-              textFiled2.innerHTML = c
+              // textFiled2.innerHTML = c
               score++
               score1.innerHTML = `Счет: ${score}`
               audio.play();
@@ -457,10 +553,14 @@ window.addEventListener("DOMContentLoaded", () => {
                 completedTasks1.innerHTML = `Заданий: ${completedTasks}`
                 score1.innerHTML = `Счет: ${score}`
                 userData(1)
+                ctUserInput.push(userInput)
+                renderTaskEnd(errorCounter,timerTime,fullTask)
               }
             } else {
               // xmarkAnimation();
+              userInput.push({key:key,status:false})
               renderKeyboard(key,false)
+              renderUserText()
               audio1.play();
               errorCounter++;
               allErrors++
