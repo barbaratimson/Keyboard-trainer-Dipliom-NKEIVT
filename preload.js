@@ -36,10 +36,17 @@ window.addEventListener("DOMContentLoaded", () => {
 
     let mmShowTasksList = document.getElementById("mmShowTasksList")
     let mmShowStatistics = document.getElementById("mmShowStatistics")
+    let mmShowCreateTask = document.getElementById("mmShowCreateTask")
+    let mmShowInfo = document.getElementById("mmShowInfo")
+    let mmShowSettings = document.getElementById("mmShowSettings")
+    let mmCloseButton = document.getElementById("mmCloseButton")
 
     let mmfile = document.querySelector(".tasksField")
     let mmpage = document.getElementById("tasksList")
     let mmStatistics = document.getElementById("mmStatistics")
+    let mmCreateTask = document.getElementById("mmCreateTask")
+    let mmInfo = document.getElementById("mmInfo")
+    let mmSettings = document.getElementById("mmSettings")
 
     let audio1 = new Audio("sound.mp3");
     let audio = new Audio("sound2.mp3");
@@ -54,17 +61,75 @@ window.addEventListener("DOMContentLoaded", () => {
     errorCounterField.innerHTML = "Ошибки: " + errorCounter
     errorCounterField2.innerHTML = "Макс. ошибок: " + maxErrors;
     
-    mmShowStatistics.addEventListener("click",()=>{
-      mmStatistics.style.visibility = "visible"
-      mmStatistics.style.scale = 1
-      mmpage.style.visibility = "none"
+    mmShowSettings.addEventListener(("click"),()=>{
+      mmpage.style.visibility = "hidden"
       mmpage.style.scale = 0
       mmLine.style.display="none"
+      mmCreateTask.style.visibility="hidden"
+      mmCreateTask.style.scale=0
+      mmInfo.style.visibility = "hidden"
+      mmInfo.style.scale = 0
+      mmStatistics.style.visibility = "hidden"
+      mmStatistics.style.scale = 0
+      mmSettings.style.visibility = "visible"
+      mmSettings.style.scale = 1
+      mmHideTasks()
+    })
+
+    mmShowInfo.addEventListener(("click"),()=>{
+      mmpage.style.visibility = "hidden"
+      mmpage.style.scale = 0
+      mmLine.style.display="none"
+      mmCreateTask.style.visibility="hidden"
+      mmCreateTask.style.scale=0
+      mmSettings.style.visibility = "hidden"
+      mmSettings.style.scale = 0
+      mmStatistics.style.visibility = "hidden"
+      mmStatistics.style.scale = 0
+      mmInfo.style.visibility = "visible"
+      mmInfo.style.scale = 1
+      mmHideTasks()
+    })
+
+    mmShowCreateTask.addEventListener(("click"),()=>{
+      mmStatistics.style.visibility = "hidden"
+      mmStatistics.style.scale = 0
+      mmpage.style.visibility = "hidden"
+      mmpage.style.scale = 0
+      mmLine.style.display="none"
+      mmInfo.style.visibility = "hidden"
+      mmInfo.style.scale = 0
+      mmSettings.style.visibility = "hidden"
+      mmSettings.style.scale = 0
+      mmCreateTask.style.visibility="visible"
+      mmCreateTask.style.scale=1
+      mmHideTasks()
+    })
+
+    mmShowStatistics.addEventListener("click",()=>{
+      mmpage.style.visibility = "hidden"
+      mmpage.style.scale = 0
+      mmLine.style.display="none"
+      mmCreateTask.style.visibility="hidden"
+      mmCreateTask.style.scale=0
+      mmInfo.style.visibility = "hidden"
+      mmInfo.style.scale = 0
+      mmSettings.style.visibility = "hidden"
+      mmSettings.style.scale = 0
+      mmStatistics.style.visibility = "visible"
+      mmStatistics.style.scale = 1
+      mmHideTasks()
     })
 
     mmShowTasksList.addEventListener("click",() => {
       mmStatistics.style.visibility = "hidden"
       mmStatistics.style.scale = 0
+      mmCreateTask.style.visibility="hidden"
+      mmCreateTask.style.scale=0
+      mmInfo.style.visibility = "hidden"
+      mmInfo.style.scale = 0
+      mmSettings.style.visibility = "hidden"
+      mmSettings.style.scale = 0
       mmpage.style.visibility="visible"
       mmpage.style.scale= 1
       mmLine.style.display="none"
@@ -78,10 +143,16 @@ window.addEventListener("DOMContentLoaded", () => {
         document.querySelector(".tasksScanField").style.scale = 1
       },200)
     })
+    
+    const mmHideTasks = () => {
+      mmfile.style.visibility = "hidden"
+        mmfile.style.scale = 0
+      document.querySelector(".tasksScanField").style.visibility = "hidden"
+        document.querySelector(".tasksScanField").style.scale = 0
+    }
 
     const renderKeyboard = (inputKey,status) => {
       const keyboard = document.querySelectorAll(".keyboardKey")
-
       keyboard.forEach(key => {
         let a = key.getAttribute("key1")
         let b = key.getAttribute("key2")
@@ -102,23 +173,17 @@ window.addEventListener("DOMContentLoaded", () => {
       
     }
 
-    // if (key.innerHTML === inputKey || key.innerHTML == ' ') {
-    //   key.style.background = "white"
-    //   setTimeout(() => {
-    //     key.style.background = "#ffffff33"
-    //    }, 150);
-    // }
+    mmCloseButton.addEventListener("click",()=>{
+      navbarHide()
+    })
+
     window.addEventListener("keydown",(e)=>{
       if (e.key === "Escape") {
         if (escapeCounter == 1){
-          mainMenu.style.visibility = "hidden"
-          mainMenu.style.opacity = 0
-          escapeCounter = 0
+          navbarHide()
           return
         }else {
-          mainMenu.style.visibility = "visible"
-          mainMenu.style.opacity = 1
-        escapeCounter++
+          navbarShow()
         }
       }
     })
@@ -143,6 +208,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     const renderUserText = () => {
+      if (i == true){ 
       clearUserText()
       userInputCount++
       userInput.forEach(e => {
@@ -165,12 +231,13 @@ window.addEventListener("DOMContentLoaded", () => {
         textFiled2.appendChild(div)
       }
       })
+    } else {
+      return
+    }
     }
 
 
-    const renderTaskEnd = (errors,time,taskText = "") => {
-
-      console.log(userInputCount)
+    const renderTaskEnd = (errors,time) => {
       let a = []
       let etErrors = document.querySelector(".etErrors")
       let etTime = document.querySelector(".etTime")
@@ -188,12 +255,12 @@ window.addEventListener("DOMContentLoaded", () => {
           a.push(div)
         })
       })
-      const perChunk = 34 // items per chunk    
+      const perChunk = 34   
       const inputArray = a
         const result = inputArray.reduce((resultArray, item, index) => { 
           const chunkIndex = Math.floor(index/perChunk)
           if(!resultArray[chunkIndex]) {
-            resultArray[chunkIndex] = [] // start a new chunk
+            resultArray[chunkIndex] = []
           }
           resultArray[chunkIndex].push(item)
           return resultArray
@@ -214,7 +281,6 @@ window.addEventListener("DOMContentLoaded", () => {
       etErrors.innerHTML = errors
       etTime.innerHTML = time
       etAccuracy.innerHTML = `${accuracy}%`
-      console.log(taskText.length,errors,taskText.length%errors)
       endTaskBox.style.visibility = "visible"
       endTaskBox.style.opacity = "1"
     }
@@ -314,19 +380,13 @@ window.addEventListener("DOMContentLoaded", () => {
       closeButton.addEventListener ("click", ()=> {
         alertBox.style.opacity="0"
         alertBox.style.visibility="hidden"
-        // clearInterval(lifetime)
         while (alertBox.firstChild) {
           alertBox.removeChild(alertBox.lastChild);
         }
       })
       alertBox.appendChild(window)
-      // const lifetime = setInterval(()=>{
-      //   alertBox.style.display="none"
-      //   while (alertBox.firstChild) {
-      //     alertBox.removeChild(alertBox.lastChild);
-      //   }
-      // },5000)
     }
+
     // Saving data to localstorage
     const  userData = (a) => {
       switch(a) {
@@ -363,8 +423,6 @@ window.addEventListener("DOMContentLoaded", () => {
   }
     })
 
-    
-
     // Ascii generator
     const generate = () => {
       var randomNum =
@@ -382,7 +440,7 @@ window.addEventListener("DOMContentLoaded", () => {
         files.forEach(file => {
         if (file.substring(file.length-3) == "txt"){
          const newDiv = document.createElement("button")
-         newDiv.setAttribute("id",`taskCreated`)
+         newDiv.classList.add("btnTask")
          newDiv.classList.add("btn")
          newDiv.classList.add("btn-text")
          newDiv.classList.add("color-white")
@@ -411,7 +469,6 @@ window.addEventListener("DOMContentLoaded", () => {
         
       });
     }
-
     
     // Navbar animation
     navbar.onpointermove = e => {
@@ -421,22 +478,25 @@ window.addEventListener("DOMContentLoaded", () => {
           navbar.style.setProperty("--x", x + "px");
         },60)
       }
+
+      navbar.addEventListener("click",()=>{
+        navbarShow()
+      })
   
+      const navbarShow = () => {
+        mainMenu.style.visibility = "visible"
+        mainMenu.style.opacity = 1
+        escapeCounter=1
+        i = false
+      }
 
      // Navbar hide function
      const navbarHide = () => {
       mainMenu.style.visibility = "hidden"
       mainMenu.style.opacity = "0"
       escapeCounter = 0
+      i = true
      }
-
-       // Navbar click to show listener
-      // navbar.addEventListener("click", ()=> {
-      //   mainMenu.style.visibility = "visible"
-      //   mainMenu.style.bottom = "0px"
-      // })
-
-
       tcwClose.addEventListener("click",()=>{
         confirmBox.style.visibility = "hidden"
         confirmBox.style.opacity = "0"
@@ -458,9 +518,9 @@ window.addEventListener("DOMContentLoaded", () => {
       ctUserInput = []
       clearEndText()
       userInputCount = 0
-      score1.innerHTML = `Счет: ${score}`
-      completedTasks1.innerHTML = `Заданий: ${completedTasks}`
-      averageErrors.innerHTML = `Сред. ошибки: ${averageErrors1}`
+      score1.innerHTML = score
+      completedTasks1.innerHTML = completedTasks
+      averageErrors.innerHTML = averageErrors1
       errorCounterField.innerHTML = errorCounter
       errorCounterField2.innerHTML =  maxErrors;
       mainMenu.style.visibility = "hidden"
@@ -602,7 +662,7 @@ window.addEventListener("DOMContentLoaded", () => {
               textField.innerHTML = `${b}`;
               // textFiled2.innerHTML = c
               score++
-              score1.innerHTML = `Счет: ${score}`
+              score1.innerHTML = score
               audio.play();
               if (b.length == 0) {
                 i = false;
@@ -610,8 +670,8 @@ window.addEventListener("DOMContentLoaded", () => {
                 score = score + 100
                 completedTasks++
                 averageErrors1 = Math.floor(allErrors/completedTasks)
-                completedTasks1.innerHTML = `Заданий: ${completedTasks}`
-                score1.innerHTML = `Счет: ${score}`
+                completedTasks1.innerHTML = completedTasks
+                score1.innerHTML = score
                 userData(1)
                 ctUserInput.push(userInput)
                 renderTaskEnd(errorCounter,timerTime,fullTask)
@@ -626,7 +686,7 @@ window.addEventListener("DOMContentLoaded", () => {
               errorCounter++;
               allErrors++
               averageErrors1 = Math.floor(allErrors/completedTasks)
-              averageErrors.innerHTML = `Сред. ошибки: ${averageErrors1}`
+              averageErrors.innerHTML = averageErrors1
               
               errorCounterField.innerHTML = errorCounter
               errorCounterField2.innerHTML = maxErrors;

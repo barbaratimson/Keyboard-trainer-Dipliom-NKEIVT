@@ -33,13 +33,13 @@
                 <button id = "mmShowTasksList"><i class="fa-solid fa-list"></i></button>
             </div>
             <div class = "mmLeftSideBlock" title = "Создание заданий">
-                <button><i class="fa-solid fa-list-check"></i></button>
+                <button id = "mmShowCreateTask"><i class="fa-solid fa-list-check"></i></button>
             </div>
             <div class = "mmLeftSideBlock" title = "Информация">
-                <button><i class="fa-solid fa-circle-info"></i></button>
+                <button id = "mmShowInfo"><i class="fa-solid fa-circle-info"></i></button>
             </div>
             <div class = "mmLeftSideBlock" title = "Настройки">
-                <button><i class="fa-solid fa-gear"></i></button>
+                <button id = "mmShowSettings"><i class="fa-solid fa-gear"></i></button>
             </div>
         </div>
         <div class="mmSideRight">
@@ -61,24 +61,90 @@
                     Встроенные задания
                 </div>
                 <div class = "tasksField">
-                    <button class="btn btn-text color-white btn-border"  id="task1">Упражнение 1</button>
-                    <button class="btn btn-text color-white btn-border"  id="task2">Упражнение 2</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task1">Упражнение 1</button>
+                    <button class="btn btnTask btn-text color-white btn-border"  id="task2">Упражнение 2</button>
                 </div>
-                <div class = "mmline color-white center-text">
+                <div class = "mmline color-white center-text" style="border-top: 1px solid var(--border-color);">
                     Созданные задания
                 </div>
                 <div class = "tasksScanField"></div>
+                <div class = "arrows color-white center-text"><i class="fa-regular fa-arrow-up"></i><i class="fa-regular fa-arrow-right fa-rotate-90"></i></div>
+                <div class = "arrows arrows2 color-white center-text" id = "a"><i class="fa-regular fa-arrow-up"></i><i class="fa-regular fa-arrow-right fa-rotate-90"></i></div>
+        </div>
+        <div class = "mmRightContainer"  id = "mmStatistics">
+                <div class = "mmStatsContainer" title = "Счет" style="border-top: 1px solid var(--border-color);">
+                <div class = "score btn-text color-white"><i class="fa-solid fa-star" id = "star"></i></div>
+                <div class="score btn-text color-white" id="score"></div>
+                </div>
 
+                <div class = "mmStatsContainer" title = "Среднее количество ошибок">
+                <div class="ae btn-text color-white"><i class="fa-solid fa-bug" id = "bug"></i></div>
+                <div class="score btn-text color-white" id = "ae"></div>
+                </div>
+
+                <div class = "mmStatsContainer" title = "Выполненные задания"  style="border-bottom: 1px solid var(--border-color);">
+                <div class="ct btn-text color-white"><i class="fa-solid fa-check" id = "check"></i></div>
+                <div class="score btn-text color-white" id = "ct"></div>
+                </div>
         </div>
-        <div class = "mmRightContainer mmRightContainer2"  id = "mmStatistics" style="bottom: 0px;">
-            <div class="scoreBoard">
-                <div class="score btn-text color-white" id="score">Счет:</div>
-                <div class="ae btn-text color-white" id = "ae">Сред. ошибки:</div>
-                <div class="ct btn-text color-white" id = "ct">Заданий:</div>
-         </div>
+        <div class = "mmRightContainer"  id = "mmCreateTask">
+            <div class="mmline">
+                <div class = "center-text color-white">
+                    Создать задание
+                </div>
+            </div> 
+    
+            <div class = "customTaskPanel">
+                <div class="mmCustomTaskblock">
+                    <div class="center-text color-white">
+                    Количество ошибок: 
+                    </div>
+                <input id = "maximumErrors" type="number"  min="0" class="inputField" placeholder="Maximum errors(0 = OFF)">
+                <div class="center-text color-white">
+                    Название задания: 
+                    </div>
+                <input id = "taskName" type="text" class="inputField" placeholder="Task name">
+                <div class="center-text color-white">
+                    Время в секундах: 
+                    </div>
+                <input id = "timerTime" type="number" min="1" class="inputField" placeholder="Time in seconds">
+                </div>
+                <div class="mmCustomTaskblock">
+                <textarea id="taskTextField" cols="30" rows="10" placeholder="Task text" class="inputField"></textarea>
+                <button id = "customTaskSubmit" class="btn btn-text color-white">Создать задание</button>
+                </div>
+    
+            </div>
+        </div>
+
+        <div class = "mmRightContainer"  id = "mmInfo">
+            <div class="mmInfoFooter center-text color-white">
+                Сергей Соколов 2023г.
+            </div>
+        </div>
+        <div class = "mmRightContainer"  id = "mmSettings">
+            settings
         </div>
     </div>
     </div>
+    </div>
+    <div class = "mmCloseButtonContainer">
+        <button id = "mmCloseButton"><i class="fa-solid fa-xmark color-white center-text"></i></button>
     </div>
     </div>
     <div class = "mainMenu2" style="visibility: hidden;">
@@ -305,10 +371,5 @@
 
 </div>
 
-
-
-<footer>
-    <div class="text-center color-white" id = "f1">Сергей Соколов</div>
- </footer>
     <script src="./preload.js"></script>
 </html>

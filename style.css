@@ -138,41 +138,166 @@
 }
 
 .mmSideRight{
-  width: 100%;
-  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .mmRightContainer{
+  flex-grow: 1;
   position: absolute;
-  width: 100%;
-  height: 100%;
-  transition: all .4s;
+  transition: all .3s;
   scale: 0;
   visibility: hidden;
-}
-.mmRightContainer2{
-  position: absolute;
-  width: 87%;
-  margin: 0;
+  height: 100%;
+  width: 85%;
+  left:15%;
 }
 .mmSideRight > #tasksList {
   display: flex;
   flex-direction: column;
-  position: relative;
 }
+
+
+.mmSideRight > #mmStatistics {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  border-top: 10%;
+}
+
+.arrows {
+  position: absolute;
+  display: initial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top:23%;
+  left:96%;
+  opacity: 0.4;
+}
+
+.arrows2 {
+  top: 75%;
+  left: 96%;
+}
+
+.mmStatsContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  flex-grow: 1;
+  border-bottom: 1px solid var(--border-color);
+}
+#star:hover {
+  transition: all .3s;
+  rotate:145deg;
+}
+
+#star:not(:hover), #bug:not(:hover), #check:not(:hover) {
+  transition: all .3s;
+  rotate:0deg;
+}
+
+#bug:hover {
+  transition: all .3s;
+  rotate:80deg;
+}
+#check:hover {
+  transition: all .3s;
+  rotate:360deg;
+}
+.mmStatsContainer > div {
+  font-size: 25px;
+  padding-bottom: 20px;
+}
+
+#mmStatistics div:nth-child(3) {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.btnTask {
+  border: 0;
+  border-radius: 0;
+  background: rgb(51, 53, 58);
+  border-right: 1px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
+  flex-grow: 1;
+  transition: all .4s;
+  width: 90%;
+}
+
+.btnTask:hover {
+  font-size: 30px;
+  width: 95% !important;
+}
+
+#mmInfo > .mmInfoFooter {
+  display: flex;
+  border-top: 1px solid var(--border-color);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 30px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+}
+
+
+.mmCloseButtonContainer {
+  position: absolute;
+  display: initial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top:6.2%;
+  left:82%;
+  z-index: 2;
+}
+.mmCloseButtonContainer > button {
+  border: 0;
+  background-color: transparent;
+}
+.mmCloseButtonContainer > button:hover {
+  transition: all .3s;
+  scale: 1.5;
+}
+.mmCloseButtonContainer > button:not(:hover) {
+  transition: all .3s;
+  scale: 1;
+}
+
+
+
+.mmSideRight > #mmCreateTask {
+  display: flex;
+  flex-direction: column; 
+}
+
 
 .mmRightContainer > .tasksField , .tasksScanField {
   display: flex;
   flex-direction:column;
+  align-items: center;
+  position: relative;
   width: 100%;
   height: 400px;
   overflow-x: auto;
   list-style: none;
-  padding: 0;
-  margin: 0;
+  left: 2.5%;
+  margin-top: 20px;
+  margin-bottom: 20px;
   visibility: hidden;
   scale: 0;
   transition: all .4s;
+  width: 95%;
 }
 
 
@@ -560,7 +685,7 @@
     flex-direction: row;
     align-items: center;
     width: 500px;
-    top:40px;
+    top:60px;
   }
   .statsLine > .slBlock {
     display: flex;

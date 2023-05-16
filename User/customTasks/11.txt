@@ -1,1 +1,1 @@
-{"taskText":"fffff","maxErrors":"0","timerTime":"2500"}
+{"taskText":"fdf","maxErrors":"0","timerTime":"1"}
