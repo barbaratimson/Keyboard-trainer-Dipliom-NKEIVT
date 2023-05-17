@@ -661,25 +661,24 @@ window.addEventListener("DOMContentLoaded", () => {
       timerA=40
       taskConfirmWindow(`"а" и "о" Ур. 3`,b,maxErrors,timerA)
     });
-  
-    // Task 2
-    // task2.addEventListener("click", () => {
-    //   b = ""
-    //   for (counter = 0; counter <= 10; counter++) {
-    //     rNum = generate()
-    //       if (rNum >32 && rNum !== 127) {
-    //     b += String.fromCharCode(rNum);
-    //       }
-    //       else {
-    //         rNum = generate()
-    //         b += String.fromCharCode(rNum);
-    //       }
-    //   }
-    //   i = true;
-    //   maxErrors = 20
-    //   timerA = 122112
-    //   taskConfirmWindow("Задание 2",b,maxErrors,timerA)
-    // });
+
+    task4.addEventListener("click", () => {
+      b = ""
+      for (counter = 0; counter <= 10; counter++) {
+        rNum = generate()
+          if (rNum >32 && rNum !== 127) {
+        b += String.fromCharCode(rNum);
+          }
+          else {
+            rNum = generate()
+            b += String.fromCharCode(rNum);
+          }
+      }
+      i = true;
+      maxErrors = 20
+      timerA = 90
+      taskConfirmWindow("Случайные ASCII",b,maxErrors,timerA)
+    });
     
 
 
