@@ -209,7 +209,7 @@
   rotate:80deg;
 }
 #check:hover {
-  transition: all .3s;
+  transition: all 1s;
   rotate:360deg;
 }
 .mmStatsContainer > div {
@@ -230,9 +230,11 @@
   flex-grow: 1;
   transition: all .4s;
   width: 90%;
+  max-height: 30px;
 }
 
 .btnTask:hover {
+  max-height: 45px;
   font-size: 30px;
   width: 95% !important;
 }
@@ -243,7 +245,7 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  height: 30px;
+  padding: 10px;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -258,7 +260,7 @@
   flex-direction: column;
   align-items: center;
   top:6.2%;
-  left:82%;
+  left:82.8%;
   z-index: 2;
 }
 .mmCloseButtonContainer > button {
@@ -279,6 +281,70 @@
 .mmSideRight > #mmCreateTask {
   display: flex;
   flex-direction: column; 
+}
+.mmCtTop {
+  display: flex;
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+.mmCtFieldsContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  flex-grow: 1;
+  align-items: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+#mmCreateTask {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+}
+
+.mmCtBlock {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  gap: 20px;
+}
+.mmCtBlock > div, .mmCtBlock2 > div  {
+  text-align: center;
+  position: relative;
+  height: 40px;
+  width: 250px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mmCtBlock > input {
+  border-radius: 3px;
+  border: 2px solid var(--border-color);
+  text-align: center;
+}
+
+
+.mmCtBlock2 {
+  flex-grow: 1;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap:60px;
+}
+
+
+
+.mmCtBlock2 > #taskTextField {
+  position: relative;
+  width: 95.5%;
+  border-radius: 3px;
+  border: 2px solid var(--border-color);
 }
 
 
@@ -501,6 +567,7 @@
   display: flex;
   position: relative;
   top: 70px;
+  font-size: 15px;
   width: 90%;
   padding: 5px;
   border-top: 1px solid var(--border-color);
@@ -620,9 +687,6 @@
   gap: 10px;
 }
 
-#taskTextField {
-  width: 99%;
-}
 .customTaskPanel > .fields {
   display: flex;
   flex-direction: row;
@@ -698,7 +762,7 @@
   }
 
 #text-field {
-  width: 1000px;
+  width: 1250px;
   height: 60px;
   overflow: hidden;
   margin-left:10px;
@@ -850,7 +914,7 @@ nav > .nav-section {
   display: flex;
   flex-direction: column;
   position: relative;
-  bottom: 250px;
+  top: 600px;
 }
 
 .keyLine {
@@ -861,8 +925,6 @@ nav > .nav-section {
   width: 100%;
   padding: 5px 0;
 }
-
-
 
 .keyboardKey {
   height: 45px;

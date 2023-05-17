@@ -1,4 +1,41 @@
 const fs = require('fs');
+
+/**
+ * Self-adjusting interval to account for drifting
+ * 
+ * @param {function} workFunc  Callback containing the work to be done
+ *                             for each interval
+ * @param {int}      interval  Interval speed (in milliseconds)
+ * @param {function} errorFunc (Optional) Callback to run if the drift
+ *                             exceeds interval
+ */
+function AdjustingInterval(workFunc, interval, errorFunc) {
+  var that = this;
+  var expected, timeout;
+  this.interval = interval;
+
+  this.start = function() {
+      expected = Date.now() + this.interval;
+      timeout = setTimeout(step, this.interval);
+  }
+
+  this.stop = function() {
+      clearTimeout(timeout);
+  }
+
+  function step() {
+      var drift = Date.now() - expected;
+      if (drift > that.interval) {
+          // You could have some default stuff here too...
+          if (errorFunc) errorFunc();
+      }
+      workFunc();
+      expected += that.interval;
+      timeout = setTimeout(step, Math.max(0, that.interval-drift));
+  }
+}
+
+
 window.addEventListener("DOMContentLoaded", () => {
     // let section
     let navbar = document.getElementById("navbar")
@@ -56,6 +93,8 @@ window.addEventListener("DOMContentLoaded", () => {
     let userInput2 = []
     let escapeCounter = 0
     let userInputCount = 0
+    var tTime = 0;
+    let taskEnd = false
     audio.volume = 0;
     audio1.volume = 0;
     errorCounterField.innerHTML = "Ошибки: " + errorCounter
@@ -208,7 +247,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     const renderUserText = () => {
-      if (i == true){ 
+      if (i == true){
       clearUserText()
       userInputCount++
       userInput.forEach(e => {
@@ -279,10 +318,16 @@ window.addEventListener("DOMContentLoaded", () => {
       })
       let accuracy = 100 - Math.floor(100 * (errors/userInputCount))
       etErrors.innerHTML = errors
-      etTime.innerHTML = time
+      let endTime = timerTime-tTime
+      let minutes = Math.trunc(endTime/60)
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      let seconds = (Math.floor(endTime%60))
+      seconds = seconds < 10 ? "0" + seconds : seconds;
+      etTime.innerHTML = `${minutes}:${seconds}`
       etAccuracy.innerHTML = `${accuracy}%`
       endTaskBox.style.visibility = "visible"
       endTaskBox.style.opacity = "1"
+      taskEnd=true
     }
 
     const taskConfirmWindow = (taskName,taskText,errors,time) => {
@@ -301,12 +346,14 @@ window.addEventListener("DOMContentLoaded", () => {
       start.addEventListener("click",()=>{
         b = taskText
         maxErrors = errors
-        timerTime = time
+        tTime = time
+        timerTime = tTime
         i = true
         screenReset()
         timerStart()
         confirmBox.style.visibility = "hidden"
         confirmBox.style.opacity = "0"
+        taskEnd = false
       })
     }
 
@@ -484,8 +531,11 @@ window.addEventListener("DOMContentLoaded", () => {
       })
   
       const navbarShow = () => {
+        mainMenu.style.display = "flex"
+        setTimeout(() => {
         mainMenu.style.visibility = "visible"
         mainMenu.style.opacity = 1
+        },100)
         escapeCounter=1
         i = false
       }
@@ -495,7 +545,14 @@ window.addEventListener("DOMContentLoaded", () => {
       mainMenu.style.visibility = "hidden"
       mainMenu.style.opacity = "0"
       escapeCounter = 0
+      if (taskEnd == true){
+        i = false
+      } else {
       i = true
+      }
+      setTimeout(() => {
+        mainMenu.style.display = "none"
+      },100)
      }
       tcwClose.addEventListener("click",()=>{
         confirmBox.style.visibility = "hidden"
@@ -521,50 +578,49 @@ window.addEventListener("DOMContentLoaded", () => {
       score1.innerHTML = score
       completedTasks1.innerHTML = completedTasks
       averageErrors.innerHTML = averageErrors1
-      errorCounterField.innerHTML = errorCounter
-      errorCounterField2.innerHTML =  maxErrors;
+      errorCounterField.innerHTML = 0
+      errorCounterField2.innerHTML =  0;
+      timerField.innerHTML = `00:00`
       mainMenu.style.visibility = "hidden"
       mainMenu.style.opacity = "0"
     }
 
-
-
-    // Tasks timer
-    // const timer = (time) => {  
-    //  //Пофиксить возможность двойного нажатия 
-    //   var start = Date.now();
-    //   time = time
-    // var delta = Date.now() - start; 
-    // curr = Math.floor(delta / 1000)
-    // let timeLeft = time-curr
-    // timerField.innerHTML = `${timeLeft} сек. осталось`
-    // if (timeLeft <= 0) {
-    //   i = false
-    //   textField.innerHTML = "Время вышло"
-    //   return false
-    // }
-    // }
-    
-    
-    const timerStart = (stop = false) => {
-      if (timersRunning === 1 || stop == true) {//stop does not work
-        console.log(stop,"sdsd")
-        clearInterval(ad)
-        timersRunning = 0
-      }
-    timersRunning++
-    var ad = setInterval(function() {
-      timerTime--
-      timerField.innerHTML = `${timerTime} сек.`
-      if(timerTime === 0) {
-        i = false
-        clearInterval(ad)
-        textField.innerHTML = "Время вышло"
-        timersRunning = 0
-      }
-    }, 1000);
-    
+  var doWork = function() {
+    if (i == true){
+    if (tTime <= 0) {
+      textField.innerHTML= "Время вышло"
+      timersRunning = 0
+      i = false
+      ticker.stop()
+      return
+    } 
+    tTime--
+    let minutes = Math.trunc(tTime/60)
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    let seconds = (Math.floor(tTime%60))
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+    timerField.innerHTML = `${minutes}:${seconds}`
+  } else {
+    ticker.stop()
+    return
   }
+  };
+
+  var doError = function() {
+    console.warn('The drift exceeded the interval.');
+  };
+
+  var ticker = new AdjustingInterval(doWork, 1000, doError);
+    const timerStart = () => {
+      if (timersRunning >= 1) {
+        ticker.stop()
+        timersRunning = 0
+      } 
+        ticker.start()
+        timersRunning = 1
+
+      }
+    
 
     // Task 1
     
@@ -581,61 +637,55 @@ window.addEventListener("DOMContentLoaded", () => {
       e = e.join("");
       return e
     }
+
     task1.addEventListener("click", () => {
-      let max = 0
-      userInputMessage("Sybmols amount",max)
-      if (max > 0) {
-        alertMessage(max)
       b = ""
-      e = [];
-      timer(false)
-      for (let i = 0; i < max; i++) {
-        a = Math.round(Math.random());
-        if (a == 1) {
-          e.push("a");
-        } else {
-          e.push("o");
-        }
-      }
-      e = e.join("");
-      b = e;
-      maxErrors = Math.floor(max*0.5) 
-      i=true
-      screenReset()
-      max = +max + (max/2)
-      timer(max)
-    }
+      b = randomAO(10)
+      maxErrors = 5
+      timerA=20
+      taskConfirmWindow(`"а" и "о" Ур. 1`,b,maxErrors,timerA)
+    });
+
+    task2.addEventListener("click", () => {
+      b = ""
+      b = randomAO(20)
+      maxErrors = 8
+      timerA=30
+      taskConfirmWindow(`"а" и "о" Ур. 2`,b,maxErrors,timerA)
+    });
+
+    task3.addEventListener("click", () => {
+      b = ""
+      b = randomAO(30)
+      maxErrors = 10
+      timerA=40
+      taskConfirmWindow(`"а" и "о" Ур. 3`,b,maxErrors,timerA)
     });
   
     // Task 2
-    task2.addEventListener("click", () => {
-      let max = prompt("Symbols count")
-      Number(max)
-      if (max) {
-      b = ""
-      for (counter = 0; counter <= max; counter++) {
-        rNum = generate()
-          if (rNum >32 && rNum !== 127) {
-        b += String.fromCharCode(rNum);
-          }
-          else {
-            rNum = generate()
-            b += String.fromCharCode(rNum);
-          }
-      }
-      i = true;
-      maxErrors = Math.floor(max*1.2)
-      screenReset();
-      timer(max*3)
-    }
-    });
+    // task2.addEventListener("click", () => {
+    //   b = ""
+    //   for (counter = 0; counter <= 10; counter++) {
+    //     rNum = generate()
+    //       if (rNum >32 && rNum !== 127) {
+    //     b += String.fromCharCode(rNum);
+    //       }
+    //       else {
+    //         rNum = generate()
+    //         b += String.fromCharCode(rNum);
+    //       }
+    //   }
+    //   i = true;
+    //   maxErrors = 20
+    //   timerA = 122112
+    //   taskConfirmWindow("Задание 2",b,maxErrors,timerA)
+    // });
     
 
 
     // // Основной цикл
     userData(2)
     screenReset();
-    i = true
     window.addEventListener("keydown", (e) => {
       if (i == true) {
         if (errorCounter < maxErrors || maxErrors == false) {
@@ -674,7 +724,7 @@ window.addEventListener("DOMContentLoaded", () => {
                 score1.innerHTML = score
                 userData(1)
                 ctUserInput.push(userInput)
-                renderTaskEnd(errorCounter,timerTime,fullTask)
+                renderTaskEnd(errorCounter,tTime,fullTask)
               }
             } else {
               // xmarkAnimation();
@@ -702,4 +752,7 @@ window.addEventListener("DOMContentLoaded", () => {
       }
     } 
     });
+    i = false
+    taskEnd=true
+    textField.innerHTML = b
   });
