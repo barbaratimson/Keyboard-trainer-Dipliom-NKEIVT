@@ -100,6 +100,7 @@ window.addEventListener("DOMContentLoaded", () => {
     errorCounterField.innerHTML = "Ошибки: " + errorCounter
     errorCounterField2.innerHTML = "Макс. ошибок: " + maxErrors;
     
+    
     mmShowSettings.addEventListener(("click"),()=>{
       mmpage.style.visibility = "hidden"
       mmpage.style.scale = 0
@@ -539,6 +540,18 @@ window.addEventListener("DOMContentLoaded", () => {
         escapeCounter=1
         i = false
       }
+
+      window.onclick = function(event) {
+        if (event.target == mainMenu){
+            navbarHide()
+          } else if (event.target == confirmBox) {
+            confirmBox.style.visibility = "hidden"
+            confirmBox.style.opacity = "0"
+          } else if (event.target == endTaskBox) {
+            endTaskBox.style.visibility = "hidden"
+            endTaskBox.style.opacity = "0"
+          }
+        }
 
      // Navbar hide function
      const navbarHide = () => {
