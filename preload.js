@@ -1,5 +1,4 @@
 const fs = require('fs');
-
 /**
  * Self-adjusting interval to account for drifting
  * 
@@ -84,9 +83,8 @@ window.addEventListener("DOMContentLoaded", () => {
     let mmCreateTask = document.getElementById("mmCreateTask")
     let mmInfo = document.getElementById("mmInfo")
     let mmSettings = document.getElementById("mmSettings")
+    let clearCache = document.getElementById("clearCache")
 
-    let audio1 = new Audio("sound.mp3");
-    let audio = new Audio("sound2.mp3");
     let maxErrors = 0
     let userInput = []
     let ctUserInput = []
@@ -95,11 +93,8 @@ window.addEventListener("DOMContentLoaded", () => {
     let userInputCount = 0
     var tTime = 0;
     let taskEnd = false
-    audio.volume = 0;
-    audio1.volume = 0;
     errorCounterField.innerHTML = "Ошибки: " + errorCounter
     errorCounterField2.innerHTML = "Макс. ошибок: " + maxErrors;
-    
     
     mmShowSettings.addEventListener(("click"),()=>{
       mmpage.style.visibility = "hidden"
@@ -576,6 +571,12 @@ window.addEventListener("DOMContentLoaded", () => {
         endTaskBox.style.opacity = "0"
       })
 
+      clearCache.addEventListener("click",()=>{
+        alertMessage("Сообщение","Статистика сброшена!")
+      })
+      
+
+
     // Resetting screen
 
     const screenReset = () => {
@@ -654,16 +655,16 @@ window.addEventListener("DOMContentLoaded", () => {
     task1.addEventListener("click", () => {
       b = ""
       b = randomAO(10)
-      maxErrors = 5
-      timerA=20
+      maxErrors = 6
+      timerA=45
       taskConfirmWindow(`"а" и "о" Ур. 1`,b,maxErrors,timerA)
     });
 
     task2.addEventListener("click", () => {
       b = ""
       b = randomAO(20)
-      maxErrors = 8
-      timerA=30
+      maxErrors = 10
+      timerA=60
       taskConfirmWindow(`"а" и "о" Ур. 2`,b,maxErrors,timerA)
     });
 
@@ -671,7 +672,7 @@ window.addEventListener("DOMContentLoaded", () => {
       b = ""
       b = randomAO(30)
       maxErrors = 10
-      timerA=40
+      timerA=60
       taskConfirmWindow(`"а" и "о" Ур. 3`,b,maxErrors,timerA)
     });
 
@@ -725,7 +726,6 @@ window.addEventListener("DOMContentLoaded", () => {
               // textFiled2.innerHTML = c
               score++
               score1.innerHTML = score
-              audio.play();
               if (b.length == 0) {
                 i = false;
                 textField.innerHTML = "Победа!";
@@ -744,7 +744,6 @@ window.addEventListener("DOMContentLoaded", () => {
               userInput2.push({key:key,status:true})
               renderKeyboard(key,false)
               renderUserText()
-              audio1.play();
               errorCounter++;
               allErrors++
               averageErrors1 = Math.floor(allErrors/completedTasks)

@@ -948,3 +948,58 @@ nav > .nav-section {
 .space {
   width: 100px !important; 
 }
+
+.mmItext {
+  font-size: 17px;
+  padding: 30px;
+  text-align:center;
+}
+.mmIContacts {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-top:30px;
+  width: 90%;
+  padding-left: 10%;
+}
+.mmIContactsBlock{
+  position: relative;
+  display: flex;
+  width: 40px;
+  height: 40px;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.contactsImg {
+  width: 40px;
+  height: 40px;
+}
+
+.contactsImg:not(:hover){
+  transition: all .3s;
+  opacity: 0.7;
+}
+
+.contactsImg:hover{
+  transition: all .3s;
+  opacity: 1;
+}
+
+.mmSContainer {
+  padding: 30px;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.mmSblock{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
