@@ -352,42 +352,7 @@ window.addEventListener("DOMContentLoaded", () => {
         taskEnd = false
       })
     }
-
-    document.getElementById("stopTimer").addEventListener("click", () => {
-      userInputMessage("Sybmols amount")
-    }) 
-
-    const userInputMessage = (text,varie) => {
-      askBox.style.visibility = "visible"
-      askBox.style.opacity = "1"
-      const confirmWindow = document.createElement("div")
-      confirmWindow.classList.add("confirmWindow")
-      const closeButton = document.createElement("button")
-      const symbolsAmount = document.createElement("input")
-      const name = document.createTextNode(text)
-
-      closeButton.classList.add("btn")
-      closeButton.classList.add("btn-text")
-      closeButton.classList.add("color-white")
-      closeButton.innerHTML = "Close"
-      
-
-      closeButton.addEventListener ("click", (varie)=> {
-        askBox.style.opacity="0"
-        askBox.style.visibility="hidden"
-        while (askBox.firstChild) {
-          askBox.removeChild(askBox.lastChild);
-        }
-        return varie = symbolsAmount.value
-      })
-
-      confirmWindow.appendChild(name)
-      confirmWindow.appendChild(symbolsAmount)
-      confirmWindow.appendChild(closeButton)
-
-      askBox.appendChild(confirmWindow)
-      }
-
+    
     const alertMessage = (title,message) => {
       const alertBox = document.querySelector(".alertBox")
       alertBox.style.visibility="visible"
@@ -411,7 +376,7 @@ window.addEventListener("DOMContentLoaded", () => {
       closeButton.classList.add("btn")
       closeButton.classList.add("btn-text")
       closeButton.classList.add("color-white")
-      closeButton.innerHTML = "Close"
+      closeButton.innerHTML = "Закрыть"
 
       titleLine.appendChild(titleText)
 

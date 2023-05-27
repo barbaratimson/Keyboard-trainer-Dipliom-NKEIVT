@@ -6,13 +6,16 @@ function createWindow () {
     width: 1920,
     height: 1080,
     center:true,
+    autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: true,
+      devTools: false
+
     }
   })
 
-  
+  console.log(`${__dirname}/logo.svg`)
 
   win.loadFile('index.html')
 
