@@ -741,7 +741,7 @@
   flex-direction: column;
   align-items: center;
   position: absolute;
-  top: 45%;
+  top: 60%;
   left: 50%;
   margin-right: -50%;
   transform: translate(-50%, -50%) }
@@ -914,11 +914,13 @@ nav > .nav-section {
   
 }
 
+
 .keyboardContainer {
   display: flex;
   flex-direction: column;
+  width: 100%;
   position: relative;
-  top: 600px;
+  top:120px
 }
 
 .keyLine {
